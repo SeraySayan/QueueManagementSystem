@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register"
+                android:text="Register"
                 android:id="@+id/RegisterText"
                 android:textSize="36sp"
                 android:textAlignment="center"
@@ -62,7 +62,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/rePassword"
+                android:id="@+id/re_passwaord"
                 android:background="@drawable/custom_edit_text"
                 android:layout_marginTop="20dp"
                 android:inputType="textPassword"
