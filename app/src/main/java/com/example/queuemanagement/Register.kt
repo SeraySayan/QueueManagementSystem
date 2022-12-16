@@ -3,29 +3,33 @@ package com.example.queuemanagement
 
 import android.content.Intent
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.queuemanagement.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.*
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class Register : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var database: FirebaseFirestore
+    private lateinit var database: FirebaseDatabase
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
-        database = FirebaseFirestore.getInstance()
+        database = FirebaseDatabase.getInstance()
 
         binding.RegisterButton.setOnClickListener{
             performRegister()
@@ -38,7 +42,7 @@ class Register : AppCompatActivity() {
 
         val email = binding.mail.text.toString()
         val password = binding.password.text.toString()
-        val repassword = binding.rePassword.text.toString()
+        val repassword = binding.rePasswaord.text.toString()
         val birthday = binding.birthday.text.toString()
 
         if (email.isNotEmpty()&& password.isNotEmpty()&&repassword.isNotEmpty()&&birthday.isNotEmpty()){
@@ -48,13 +52,19 @@ class Register : AppCompatActivity() {
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ it ->
 
                     if(it.isSuccessful){
+
+
+                        val databaseRef = database.getReferenceFromUrl("https://bankq-a7a84-default-rtdb.firebaseio.com/").child("users")
                         val users = Users(email,password,birthday,firebaseAuth.currentUser!!.uid)
-                        database.collection("Customers").add(users).addOnCompleteListener{
+                        databaseRef.setValue(users).addOnCompleteListener{
                             if (it.isSuccessful){
-                                val intent = Intent(this,MainActivity::class.java)
+                                val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
                             }
                         }
+
+
+
                     }
 
                 }

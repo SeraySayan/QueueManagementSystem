@@ -13,24 +13,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        //binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.loginButton.setOnClickListener {
             val email = binding.mail.text.toString()
             val password = binding.password.text.toString()
-
-
-
-
             //if users enter the information
             if (password != "" && email != "") {
 
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        intent = Intent(applicationContext, Welcome::class.java)
+                        intent = Intent(this, Welcome::class.java)
                         startActivity(intent)
 
 
@@ -68,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.createAccountButton.setOnClickListener {
-            intent = Intent(applicationContext, Register::class.java)
+            intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
 
