@@ -1,8 +1,10 @@
 package com.example.queuemanagement
 
+import ClassFiles.* // Importing .kt Class Files from different folder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -12,26 +14,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var db = Firebase.firestore
 
-        // TEST FOR DATABASE CONFIG - TEMP /////////////////////////
+        ////////////  TEST FOR DATABASE CONFIG - TEMP   ////////////
         var textView: TextView = findViewById(R.id.textView1)
-        var mylist = StringBuilder()
-        db.collection("PersonList")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    println("${document.id} => ${document.data}")
-                    mylist.append("${document.data}")
-                }
-                textView.setText(mylist)
+        val database = FirestoreDB()
+        var myList = mutableListOf<Any>()
+
+        database.listenToChanges("Customers") { querySnapshot ->
+
+            database.getData("Customers") { data ->
+
+                myList = data
+                textView.setText(myList.toString())
             }
-            .addOnFailureListener { exception ->
-                println("Error getting documents.")
-            }
+        }
+
+        var testObject = Ticket()
+        database.addData("TestCollection/testdoc1/testsubcol", testObject)
+
+        /////////////////////// OOP TESTS //////////////////////////
+
+        var c1 = Customer()
+        var e1 = Employee()
+        var t1 = Ticket()
+        var t2 = c1.createTicket("TaxOperation")
+
         ////////////////////////////////////////////////////////////
-
-
-
     }
+
+
+
 }
