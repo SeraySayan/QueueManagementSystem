@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/buttonDequeue"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="29dp"
+        android:text="Dequeue"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAddTicket"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="29dp"
+        android:text="Add Ticket"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="344dp"
+        android:layout_height="340dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:hint="Queue will be displayed here:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextProcess"
+        android:layout_width="344dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="33dp"
+        android:ems="10"
+        android:hint="ProcessType"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTicketno"
+        android:layout_width="344dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="34dp"
+        android:ems="10"
+        android:hint="Ticket No"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProcess" />
+
+    <EditText
+        android:id="@+id/editTextPriority"
+        android:layout_width="344dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="34dp"
+        android:ems="10"
+        android:hint="Priority"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTicketno" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

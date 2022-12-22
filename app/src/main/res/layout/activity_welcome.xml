@@ -8,7 +8,6 @@
     android:background="@drawable/loginbkg">
 
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -22,5 +21,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.14"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="344dp"
+        android:layout_height="411dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="120dp"
+        android:hint="DB data will be fetched here"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/QueueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="163dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginBottom="50dp"
+        android:text="Queue Screen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+
+    android:orientation="vertical"
+
+    tools:context=".CustomerActiveQueue"
+    android:background="@drawable/loginbkg">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="214dp"
+        android:layout_height="73dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/black"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="20dp">
+
+        <TextView
+            android:id="@+id/peopleCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="number in process"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="214dp"
+        android:layout_height="73dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/black"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="20dp">
+
+        <TextView
+            android:id="@+id/remainingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="remaining time"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="214dp"
+        android:layout_height="73dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/black"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="20dp">
+
+        <TextView
+            android:id="@+id/queueNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="your number"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <Button
+        android:id="@+id/LeaveQueueButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Leave Queue"
+        android:textSize="18sp"
+        android:background="#FF5555"
+        android:textColor="@color/white"
+        />
+
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".CustomerTransaction"
+    android:background="@drawable/loginbkg">
+
+
+
+    <LinearLayout
+        android:layout_width="363dp"
+        android:layout_height="469dp"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/TransactionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Transaction:"
+            android:textAlignment="center"
+            android:textColor="@color/purple_700"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/WorDButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:text="Withdraw/deposit money"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="#7733DD"/>
+
+        <Button
+            android:id="@+id/paymentButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:text="payments"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="#7733DD"/>
+
+        <Button
+            android:id="@+id/currencyButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:text="Investment to currency"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="#7733DD"/>
+
+        <Button
+            android:id="@+id/newAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:text="open new account"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="#7733DD"/>
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
+
+
+
+
+
