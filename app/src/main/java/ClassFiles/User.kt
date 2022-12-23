@@ -7,7 +7,7 @@ abstract class User {
     var surname: String = ""
     var email: String = ""
     var password: String = ""
-    var reg_date: String = "" // TODO: make this type "Date" class.
+    var reg_date: String = "" // TODO: make this type "Date" class. // can be done in 2nd term
     var phone_no: String = ""
     var address: String = ""
 

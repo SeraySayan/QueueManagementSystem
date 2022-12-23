@@ -1,14 +1,11 @@
 package com.example.queuemanagement
 
-
-import android.app.Activity
-
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.*
-import com.google.firebase.ktx.Firebase
+
 
 /**
  * Trying to implement Firestore in this class.
@@ -21,10 +18,12 @@ import com.google.firebase.ktx.Firebase
 
 class FirestoreDB  {
 
+    // Getting Firestore object instance
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    // Sample Read data function.
 
+    // getData() will take a collection dir, and returns a MutableList of documents.
+    // Using with a listener (listenToChanges()) is recommended
     fun getData(collection: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
         db.collection(collection)
@@ -37,19 +36,22 @@ class FirestoreDB  {
                 callback(dataList)
             }
             .addOnFailureListener { exception ->
-                Log.d("TAG", "Error getting documents: ", exception)
+                Log.d("getData", "Error getting documents: ", exception)
             }
     }
 
+    // getting Queue function. Similar to getData(), but this method has
+    // the queue query for firestore Index.
     fun getQueue(collection: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
         db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
+
+                    // This formatting is temp. //TODO: Implement a "documentToObject" method.
                     val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + "\n"
                     dataList.add(data)
-
                 }
                 callback(dataList)
             }
@@ -58,6 +60,11 @@ class FirestoreDB  {
             }
     }
 
+    // This method reaches the qeueue Index and delete the
+    // first item. NOTE: WILL CHANGE TO NOT DELETE!
+    // Instead, we need to move that ticket document to another collection "Tickets"
+    // TODO: 2 Different dequeue must be exist. One for customer, one for employee
+    // Also I gotta do some more process such as adding details to tickets
     fun dequeue(collection: String) {
 
         db.collection(collection)
@@ -65,7 +72,7 @@ class FirestoreDB  {
             .orderBy("date_time").limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    document.reference.delete() //
+                    document.reference.delete() // TODO: DO NOT DELETE ANYTHING!
                 }
             }
             .addOnFailureListener { exception ->
@@ -80,35 +87,34 @@ class FirestoreDB  {
         db.collection(collection)
             .add(data)
             .addOnSuccessListener { documentReference ->
-                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
+                Log.d("addData", "DocumentSnapshot added with ID: ${documentReference.id}")
             }
             .addOnFailureListener { e ->
-                Log.w("TAG", "Error adding document", e)
+                Log.w("addData", "Error adding document", e)
             }
     }
 
+    // Listener of this class. "How to use" in below.
     fun listenToChanges(collection: String, callback: (QuerySnapshot) -> Unit) {
         db.collection(collection)
             .addSnapshotListener { querySnapshot, e ->
                 if (e != null) {
-                    Log.w("TAG", "Listen failed.", e)
+                    Log.w("listenToChanges", "Listen failed.", e)
                     return@addSnapshotListener
                 }
 
                 if (querySnapshot != null) {
                     callback(querySnapshot)
                 } else {
-                    Log.d("TAG", "Current data: null")
+                    Log.d("listenToChanges", "Current data: null")
                 }
             }
     }
 
-
+    // TEST
     fun getDocumentId(documentReference: DocumentReference): String {
         return documentReference.id
     }
-
-
 
 }
 
@@ -127,9 +133,9 @@ To use the FirestoreHandler and the listenToChanges method,
 you can do something like this:
 
 
-val firestoreHandler = FirestoreHandler(context)
+val database = FirestoreDB()
 
-firestoreHandler.listenToChanges("myCollection") { querySnapshot ->
+database.listenToChanges("myCollection") { querySnapshot ->
     // Update UI or perform other actions here
 }
 
