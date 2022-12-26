@@ -10,10 +10,9 @@
     android:background="@drawable/loginbkg">
 
 
-
     <LinearLayout
         android:layout_width="363dp"
-        android:layout_height="469dp"
+        android:layout_height="390dp"
         android:layout_gravity="center"
         android:background="@color/white"
         android:orientation="vertical"
@@ -32,52 +31,72 @@
         <Button
             android:id="@+id/WorDButton"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_marginTop="30dp"
+            android:background="#7733DD"
             android:text="Withdraw/deposit money"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:background="#7733DD"/>
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/paymentButton"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_marginTop="30dp"
+            android:background="#7733DD"
             android:text="payments"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:background="#7733DD"/>
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/currencyButton"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_marginTop="30dp"
+            android:background="#7733DD"
             android:text="Investment to currency"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:background="#7733DD"/>
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/newAccountButton"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_marginTop="30dp"
+            android:background="#7733DD"
             android:text="open new account"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:background="#7733DD"/>
+            android:textSize="18sp" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="363dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="24dp">
+    <TextView
+        android:id="@+id/peopleCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="count of the people in the queue" />
+        <TextView
+            android:id="@+id/remainingTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="remaining time" />
 
+    <Button
+        android:id="@+id/EnterButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:background="#339933"
+        android:text="Enter Queue"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
-
-
+        </LinearLayout>
 
 
 </LinearLayout>
-
-
-
-
-

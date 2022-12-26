@@ -40,17 +40,53 @@ class FirestoreDB  {
             }
     }
 
+    /*fun getInfo(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
+        val dataList = mutableListOf<Any>()
+        db.collection(collection).whereEqualTo("customer_id",lookFor)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val data = document.data
+                    dataList.add(data)
+                }
+                callback(dataList)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getData", "Error getting documents: ", exception)
+            }
+    }*/
+
     // getting Queue function. Similar to getData(), but this method has
     // the queue query for firestore Index.
     fun getQueue(collection: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
-        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
+        db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
+            .whereEqualTo("status",true)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + "\n"
+                    val data = document.data["tickets"].toString()  +  document.data["servedEmp"].toString()
+                    dataList.add(data)
+                }
+                callback(dataList)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getQueue", "Error getting documents: ", exception)
+            }
+    }
+
+    fun getQueue2(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
+        val dataList = mutableListOf<Any>()
+        db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
+            .whereEqualTo("status",true).whereEqualTo("customer_id",lookFor)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+
+                    // This formatting is temp. //TODO: Implement a "documentToObject" method.
+                    val data = document.data["tickets"].toString()  +  document.data["servedEmp"].toString()
                     dataList.add(data)
                 }
                 callback(dataList)

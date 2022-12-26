@@ -15,12 +15,22 @@ class Ticket {
     var customer_id = 0
 
     // Constructor for creation from customer
-    constructor(id:Int, priority:Int,  processType:String,  customer_id:Int ){
+    constructor(id:Int, priority:Int,  processType:String, total_waited_time: Int, customer_id:Int ){
         this.id = id
         this.priority = priority
         this.processType = processType
         this.customer_id = customer_id
+        this.total_waited_time= total_waited_time
+        this.date_time = FieldValue.serverTimestamp()
+        this.status = true // new created tickets will be active
 
+    }
+
+    constructor(id:Int, priority:Int,  processType:String, customer_id:Int ){
+        this.id = id
+        this.priority = priority
+        this.processType = processType
+        this.customer_id = customer_id
         this.date_time = FieldValue.serverTimestamp()
         this.status = true // new created tickets will be active
 

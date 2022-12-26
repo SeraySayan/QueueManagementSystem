@@ -1,17 +1,15 @@
 package ClassFiles
 
-import com.google.firebase.firestore.GeoPoint
-
 class Branch {
 
     var name: String = ""
-    var id: Int = 0
+    var id: String = "0"
     var location: Array<Double> = arrayOf(0.0,0.0)
-    //var counter_list: List<Counter>?
+    var branchQueue: Queue = Queue(ArrayList() ,Employee())
 
 
     constructor() // sildiğim zaman çalışmıyor, neden bilmiyorum xd
-    constructor(id: Int, location: Array<Double>){
+    constructor(id: String, location: Array<Double>){
         this.id = id
         this.location = location
     }

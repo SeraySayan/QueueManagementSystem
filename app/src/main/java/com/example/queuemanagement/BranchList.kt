@@ -1,6 +1,7 @@
 package com.example.queuemanagement
 
 import ClassFiles.*
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -41,5 +42,18 @@ class BranchList : AppCompatActivity() {
             .addOnFailureListener{
                 Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
             }
+
+
+       /* binding.recyclerView.setOnClickListener{
+
+
+            val intent = Intent(this, CustomerTransaction::class.java)
+            startActivity(intent)
+            intent.putExtra("id",branchList[position].id)
+        }*/
+
     }
+
 }
+
+
