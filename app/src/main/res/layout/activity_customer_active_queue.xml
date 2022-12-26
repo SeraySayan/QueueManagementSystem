@@ -14,6 +14,7 @@
     tools:context=".CustomerActiveQueue"
     android:background="@drawable/loginbkg">
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="214dp"
         android:layout_height="73dp"
@@ -24,24 +25,7 @@
         app:cardElevation="20dp">
 
         <TextView
-            android:id="@+id/peopleCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="number in process"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="214dp"
-        android:layout_height="73dp"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@color/black"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="20dp">
-
-        <TextView
-            android:id="@+id/remainingTime"
+            android:id="@+id/remainingTime2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="remaining time"
@@ -58,7 +42,7 @@
         app:cardElevation="20dp">
 
         <TextView
-            android:id="@+id/queueNum"
+            android:id="@+id/queueNum2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="your number"
