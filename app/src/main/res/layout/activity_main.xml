@@ -8,13 +8,52 @@
     android:gravity="center"
     tools:context=".MainActivity"
     android:background="@drawable/loginbkg">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/noInternet"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:id="@+id/noImage"
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:src="@drawable/no_internet"
+            android:layout_marginTop="128dp"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/noInternetHeading"
+            android:layout_below="@id/noImage"
+            android:text="No Internet Connectıon"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/noInternetText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/noInternetHeading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginVertical="32dp"
+            android:gravity="center"
+            android:text="Check your Internet Connection and Try Again"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"></TextView>
+
+
+    </RelativeLayout>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
+        app:cardElevation="20dp"
+        android:id="@+id/loginVisible">
 
         <LinearLayout
             android:layout_width="match_parent"
