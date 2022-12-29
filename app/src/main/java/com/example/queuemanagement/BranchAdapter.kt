@@ -8,6 +8,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Adapter<BranchAdapter.BranchViewHolder>() {
+    private var listener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
     class BranchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvName: TextView =itemView.findViewById(R.id.textView)
         val tvLocation: TextView = itemView.findViewById(R.id.textView2)
@@ -25,6 +35,10 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Ada
         holder.tvName.text = branchlist[position].name
         holder.tvLocation.text = branchlist[position].location.toString()
         holder.tvQueueList.text ="Waiting Customers "+branchlist[position].Queue
+
+        holder.itemView.setOnClickListener {
+            listener?.onItemClick(position)
+        }
        // holder.tvID.text =branchlist[position].id.toString()
     }
 
@@ -32,3 +46,5 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Ada
         return branchlist.size
     }
 }
+
+

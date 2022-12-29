@@ -4,7 +4,10 @@ import ClassFiles.*
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import android.widget.AdapterView
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.queuemanagement.databinding.ActivityBranchListBinding
@@ -36,12 +39,22 @@ class BranchList : AppCompatActivity() {
                         val branch:Branchs? =data.toObject<Branchs>(Branchs::class.java)
                         branchList.add(branch!!)
                     }
-                    binding.recyclerView.adapter = BranchAdapter(branchList)
+                    val adapter = BranchAdapter(branchList)
+                    adapter.setOnItemClickListener(object : BranchAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            // Handle the click event
+                            Log.d("ItemClick", "Item at position $position clicked")
+                        }
+                    })
+                    binding.recyclerView.adapter = adapter
                 }
             }
             .addOnFailureListener{
                 Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
             }
+
+
+
 
 
        /* binding.recyclerView.setOnClickListener{
@@ -55,5 +68,6 @@ class BranchList : AppCompatActivity() {
     }
 
 }
+
 
 
