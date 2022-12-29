@@ -2,8 +2,10 @@ package ClassFiles
 
 
 data class Branchs(
-    val Name:String?=null,
-    val Location:Float?=null,
-    val CustomerList:ArrayList<String>?=null,
-
+    val name:String?=null,
+    val location:Float?=null,
+    val Queue:String?=null
+    //val id:Int?=null
     )
+// arraylist kullanınca deserialization hatası çıkıyor bazı durumlarda
+// o yuzden suanlık arraylist kullanımını kaldırdım

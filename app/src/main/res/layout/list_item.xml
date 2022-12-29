@@ -31,6 +31,11 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Customer List: " />
+            android:text="Queue Details: " />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID: " />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

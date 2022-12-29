@@ -17,17 +17,16 @@ class CustomerMenuActivity : AppCompatActivity() {
         binding = CustomerMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val button1 = findViewById(R.id.button1) as Button
-        button1.setOnClickListener {
-            Toast.makeText(this@CustomerMenuActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
 
-        }
-
-        binding.button8.setOnClickListener(){
-
+        binding.button1.setOnClickListener(){
             intent = Intent(this, BranchList::class.java)
             startActivity(intent)
-
+        }
+        binding.button3.setOnClickListener {
+            Toast.makeText(this@CustomerMenuActivity, "MAP", Toast.LENGTH_SHORT).show()
+        }
+        binding.button2.setOnClickListener {
+            Toast.makeText(this@CustomerMenuActivity, "SETTINGS", Toast.LENGTH_SHORT).show()
 
         }
 

@@ -29,7 +29,7 @@ class BranchList : AppCompatActivity() {
         binding.recyclerView.layoutManager =LinearLayoutManager(this)
         branchList = arrayListOf()
 
-        db.collection("1").get()
+        db.collection("Branches").get()
             .addOnSuccessListener {
                 if(!it.isEmpty){
                     for (data in it.documents){
