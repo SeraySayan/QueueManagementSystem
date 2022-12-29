@@ -2,91 +2,83 @@ package com.example.queuemanagement
 
 import ClassFiles.*
 import android.R
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.queuemanagement.databinding.ActivityCustomerTransactionBinding
 
-
+//TODO: processType seçim UI daha iyi olabilir. Bir de bu sayfayı branchList sonrasında çağıracaz
 class CustomerTransaction : AppCompatActivity() {
     public var processTime =0
     public var processType=" "
 
     var database = FirestoreDB()
     lateinit var binding: ActivityCustomerTransactionBinding
-    
-    
+
+
+    // Hashmap for keeping the processType names and their estimated time.
+    var map: HashMap<String, Int> = hashMapOf("Withdraw/Deposit Money" to 20,
+                                              "Payments" to 25,
+                                              "Investment to Currency" to 30,
+                                              "Open New Account" to 40)
+
+    // also, hashmap can be updated dynamically with built in methods.
+
+
+    @SuppressLint("SetTextI18n") // Supressing a weird warning (NOT IMPORTANT, JUST KEEP IT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        var c2 = Customer(1223,"Aslı","Yıldırım",
-            "aslı.yıldırım@metu.edu.tr","654321",
-            "25/12/2022","+905345678","İstanbul")
+        // IN ACTUAL CASE, we will come here after the branch selection,
+        // we got the info that which branch is selected. but for now,
+        // just initialize a random queue
+        var selected_queue = "/Queue/queue1/TicketsInQueue"
 
 
-       // var queue = mutableListOf<Any>()
-        var queue = ArrayList<Ticket>()
+        database.listenToChanges(selected_queue) { querySnapshot ->
 
-        database.listenToChanges("/Queue/queue1/TicketsInQueue") { querySnapshot ->
+            //TODO: TEST versiyonunda hata var. normal hali çalışıyor. queue size çalışıyor, timing için class yapmayı dene
+            database.getQueue(selected_queue) { tickets ->
 
-            database.getQueue("/Queue/queue1/TicketsInQueue") { tickets ->
+                var queue_size =  tickets.size  // getting the queue size
+                binding.peopleCount.setText("There are $queue_size customers in the line")
 
-               // queue = tickets
+                var est_wait_time = 0
+                for (ticket in tickets){
+                 //   est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
+                }
+                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time")
 
             }
         }
-        val count= queue.count()
-        var totalTime = 0
         binding.WorDButton.setOnClickListener {
-
-            processTime= 20
-            processType="Withdraw/Deposit Money"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
 
         }
 
         binding.paymentButton.setOnClickListener {
 
-            processTime= 25
-            processType="Payments"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
         }
 
         binding.currencyButton.setOnClickListener {
 
-            processTime= 30
-            processType="Investment to Currency"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
+
         }
 
         binding.newAccountButton.setOnClickListener {
 
-            processTime= 40
-            processType="Open New Account"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
 
         }
 
 
         binding.EnterButton.setOnClickListener{
+            // TODO: oluşan ticket'ı queue'ya sok.
+            // TODO: Sonra Active Queue'ya intent at.
 
-            database.addData("/Queue/queue1/TicketsInQueue",Ticket( queue[queue.size-1].id+1,0, processType,totalTime,c2.id))
-            val intent = Intent(this, CustomerActiveQueue::class.java)
-            startActivity(intent)
-            intent.putExtra("customer_id",c2.id)
         }
 
 

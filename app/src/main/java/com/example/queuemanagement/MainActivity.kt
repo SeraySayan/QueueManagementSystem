@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                         // If login is successful, start the TestQueue activity
 
                         intent = Intent(this, CustomerMenuActivity::class.java)
+                        intent.putExtra("uid",firebaseAuth.uid)     // Send the logged User's uid to the next activity
                         startActivity(intent)
 
 

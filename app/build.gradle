@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.queuemanagement"
-        minSdk 29
+        minSdk 28 // default value is 29. I changed for my phone - Baris
         targetSdk 33
         versionCode 1
         versionName "1.0"

@@ -27,9 +27,22 @@ class CustomerMenuActivity : AppCompatActivity() {
         }
         binding.button2.setOnClickListener {
             Toast.makeText(this@CustomerMenuActivity, "SETTINGS", Toast.LENGTH_SHORT).show()
+            intent = Intent(this, SettingPage::class.java)
+            startActivity(intent)
 
         }
 
+
+
+        // TEMP BUTTONS FOR DEBUG !!!
+        binding.button5.setOnClickListener(){
+            intent = Intent(this, TestQueue::class.java)
+            startActivity(intent)
+        }
+        binding.button6.setOnClickListener(){
+            intent = Intent(this, CustomerTransaction::class.java)
+            startActivity(intent)
+        }
 
 
 

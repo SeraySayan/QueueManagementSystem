@@ -1,5 +1,6 @@
 package com.example.queuemanagement
 
+import ClassFiles.Ticket
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,6 +41,26 @@ class FirestoreDB  {
             }
     }
 
+    // This function will take the collection, field and its value. Then finds the correct
+    // document and return its Document Snapshot.
+    fun getDocumentByField(collectionName: String, fieldName: String, fieldValue: String?, callback: (DocumentSnapshot?) -> Unit) {
+        val query = db.collection(collectionName).whereEqualTo(fieldName, fieldValue)
+        val task = query.get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    callback(documents.first())
+                }
+                else {
+                    Log.d("getDocumentSnapshot", "Success but query is null")
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getDocumentSnapshot", "FAILED", exception)
+                callback(null)
+            }
+    }
+
     /*fun getInfo(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
         db.collection(collection).whereEqualTo("customer_id",lookFor)
@@ -60,14 +81,13 @@ class FirestoreDB  {
     // the queue query for firestore Index.
     fun getQueue(collection: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
-        db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
-            .whereEqualTo("status",true)
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = document.data["tickets"].toString()  +  document.data["servedEmp"].toString()
+                    val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + " " + result.indexOf(document) + "\n"
                     dataList.add(data)
                 }
                 callback(dataList)
@@ -77,6 +97,31 @@ class FirestoreDB  {
             }
     }
 
+    // An alternative version, for callback "Ticket" objects.
+    fun getQueueTEST(collection: String, callback: (MutableList<Ticket>) -> Unit) {
+        val dataList = mutableListOf<Ticket>()
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+
+                    // This formatting is temp. //TODO: Implement a "documentToObject" method.
+                    val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + " " + result.indexOf(document) + "\n"
+                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["priority"].toString(),0,0 )
+                    dataList.add(myticket)
+                }
+                callback(dataList)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getQueue", "Error getting documents: ", exception)
+            }
+    }
+
+    /**
+     *
+     * getQueue2() ne için yapıldı açıklayın lütfen (comment atın şu kodlara)
+     *
+     * */
     fun getQueue2(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
         db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
@@ -114,9 +159,26 @@ class FirestoreDB  {
             .addOnFailureListener { exception ->
                 Log.d("Dequeue", "Error ", exception)
             }
-
-
     }
+
+
+    // Same as dequeue, but instead of indexed query, it directly
+    // searches for input ticket_id and deletes that ticket
+    // TODO: TEST THIS FUCNTION
+    fun leaveQueue(collection: String, ticket_id : Int){
+        db.collection(collection).whereEqualTo("id",ticket_id).limit(1).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    document.reference.delete() // TODO: DO NOT DELETE ANYTHING!
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Dequeue", "Error ", exception)
+            }
+    }
+
+
+
 
     // Method for adding data to Firestore. Can handle any type of data / object
     fun addData(collection: String, data: Any) {
