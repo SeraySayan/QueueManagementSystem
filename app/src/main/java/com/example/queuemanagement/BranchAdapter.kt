@@ -1,6 +1,7 @@
 package com.example.queuemanagement
 
 import ClassFiles.*
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Adapter<BranchAdapter.BranchViewHolder>() {
+class BranchAdapter(private val branchlist:ArrayList<Branchs>, val user_uid:String, private val context: Context): RecyclerView.Adapter<BranchAdapter.BranchViewHolder>() {
 
     class BranchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),View.OnClickListener {
         val tvName: TextView =itemView.findViewById(R.id.textView)
@@ -36,6 +37,11 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Ada
         holder.tvQueueList.text ="Waiting Customers "+branchlist[position].Queue
         holder.tvButton.setOnClickListener {
             Log.d("ItemClick", "Item at position $position clicked")
+            val intent = Intent(context, CustomerTransaction::class.java )
+            intent.putExtra("uid", user_uid)
+            intent.putExtra("queue_location", branchlist[position].Queue)
+            context.startActivity(intent)
+
 
         }
        // holder.tvID.text =branchlist[position].id.toString()

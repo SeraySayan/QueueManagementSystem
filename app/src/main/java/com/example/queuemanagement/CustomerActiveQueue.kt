@@ -18,14 +18,16 @@ class CustomerActiveQueue : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var uid = intent.getStringExtra("uid").toString()
+
 
         val customerId = intent.getStringExtra("customer_id")
         //var queue = mutableListOf<Any>()
         var queue = ArrayList<Ticket>()
 
         database.listenToChanges("/Queue/queue1/TicketsInQueue") { querySnapshot ->
-            database.getQueue2("/Queue/queue1/TicketsInQueue",customerId!!) { tickets ->
-               // queue = tickets
+            database.getQueue("/Queue/queue1/TicketsInQueue") { tickets ->
+                // = tickets
             }
         }
 

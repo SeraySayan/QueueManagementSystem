@@ -36,9 +36,11 @@ class CustomerTransaction : AppCompatActivity() {
         // IN ACTUAL CASE, we will come here after the branch selection,
         // we got the info that which branch is selected. but for now,
         // just initialize a random queue and intent values
-        var selected_queue = "/Queue/queue1/TicketsInQueue"
-        var user_uid = "Hea84E2vA7NcJcXaI8cK7eWPNV82"
 
+        //var selected_queue = "/Queue/queue1/TicketsInQueue"
+        //var user_uid = "Hea84E2vA7NcJcXaI8cK7eWPNV82"
+        var selected_queue = intent.getStringExtra("queue_location").toString()
+        var user_uid = intent.getStringExtra("uid").toString()
 
 
         database.listenToChanges(selected_queue) { querySnapshot ->
@@ -103,13 +105,15 @@ class CustomerTransaction : AppCompatActivity() {
 
         binding.EnterButton.setOnClickListener{
 
-            println("\n$processType\n")
-
             var userDoc = database.getDocumentByField("Customers","uid",user_uid){ data ->
 
                 var pri =  data?.get("priority").toString().toInt()
 
-                database.addData("/Queue/queue1/TicketsInQueue",Ticket(0,pri,processType,user_uid))
+                database.addData(selected_queue,Ticket(0,pri,processType,user_uid))
+
+                //intent = Intent(this, CustomerActiveQueue::class.java)
+                //intent.putExtra("uid", user_uid)
+                //startActivity(intent)
 
             }
 

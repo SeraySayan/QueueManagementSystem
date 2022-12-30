@@ -16,10 +16,11 @@ class CustomerMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = CustomerMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        var user_uid = intent.getStringExtra("uid")
 
         binding.button1.setOnClickListener(){
             intent = Intent(this, BranchList::class.java)
+            intent.putExtra("uid", user_uid)
             startActivity(intent)
         }
         binding.button3.setOnClickListener {
@@ -36,7 +37,7 @@ class CustomerMenuActivity : AppCompatActivity() {
 
         // TEMP BUTTONS FOR DEBUG !!!
         binding.button5.setOnClickListener(){
-            intent = Intent(this, TestQueue::class.java)
+            intent = Intent(this, CustomerActiveQueue::class.java)
             startActivity(intent)
         }
         binding.button6.setOnClickListener(){

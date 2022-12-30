@@ -22,12 +22,15 @@ class BranchList : AppCompatActivity() {
 
     private var db= FirebaseFirestore.getInstance() // TODO: implement custom class
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBranchListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         db= FirebaseFirestore.getInstance()
+        var user_uid = intent.getStringExtra("uid").toString()
 
 
         binding.recyclerView.layoutManager =LinearLayoutManager(this)
@@ -40,8 +43,9 @@ class BranchList : AppCompatActivity() {
                         val branch:Branchs? =data.toObject<Branchs>(Branchs::class.java)
                         branchList.add(branch!!)
                     }
-                    val adapter = BranchAdapter(branchList)
+                    val adapter = BranchAdapter(branchList, user_uid, this)
                     binding.recyclerView.adapter = adapter
+
                 }
             }
             .addOnFailureListener{
