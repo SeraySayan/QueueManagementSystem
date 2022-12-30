@@ -17,5 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item"
+        android:contextClickable="true"
         android:clickable="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

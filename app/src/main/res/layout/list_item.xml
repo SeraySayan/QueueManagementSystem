@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
     android:layout_margin="5dp"
     android:backgroundTint="@color/white"
-    android:clickable="true">
+    android:clickable="true"
+    android:contextClickable="true"
+    app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,30 +18,31 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="Branch Name: "
             android:textColor="@color/teal_700"
-            android:textSize="23sp"
-            android:clickable="true"/>
+            android:textSize="23sp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="Location: "
-            android:textColor="@color/black"
-            android:clickable="true"/>
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Queue Details: "
-            android:clickable="true"/>
+            android:clickable="true"
+            android:text="Queue Details: " />
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID: "
-            android:clickable="true"/>
+            android:clickable="true"
+            android:text="ID: " />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
