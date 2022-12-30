@@ -3,6 +3,9 @@ package com.example.queuemanagement
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Switch
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.queuemanagement.databinding.ActivityMainBinding
 import com.example.queuemanagement.databinding.ActivitySettingPageBinding
 // This activity is responsible for displaying the setting page for the app.
@@ -20,7 +23,19 @@ class SettingPage : AppCompatActivity() {
         setContentView(binding.root)
         // Check network connectivity and show/hide views accordingly
 
-        checkNetworkConnection()    }
+        checkNetworkConnection()
+
+        //Night mode on click listener
+        binding.switch1.setOnClickListener{
+            //Toast.makeText(this, "You clicked me.", Toast.LENGTH_SHORT).show()
+            if(binding.switch1.isChecked)
+                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
+
+    }
     // Function for checking network connectivity and showing/hiding views accordingly
 
     private fun checkNetworkConnection() {
@@ -37,4 +52,7 @@ class SettingPage : AppCompatActivity() {
 
         }
     }
+
+
+
 }

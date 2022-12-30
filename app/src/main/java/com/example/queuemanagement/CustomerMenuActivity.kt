@@ -20,14 +20,16 @@ class CustomerMenuActivity : AppCompatActivity() {
         val button1 = findViewById(R.id.button1) as Button
         button1.setOnClickListener {
             Toast.makeText(this@CustomerMenuActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-
         }
 
         binding.button8.setOnClickListener(){
 
             intent = Intent(this, BranchList::class.java)
             startActivity(intent)
-
+        }
+        binding.button10.setOnClickListener(){
+            intent = Intent(this,SettingPage::class.java)
+            startActivity(intent)
 
         }
 

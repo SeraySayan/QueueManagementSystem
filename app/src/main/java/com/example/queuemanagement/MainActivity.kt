@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         // If login is successful, start the TestQueue activity
 
-                        intent = Intent(this, SettingPage::class.java)
+                        intent = Intent(this, CustomerMenuActivity::class.java)
                         startActivity(intent)
 
 
