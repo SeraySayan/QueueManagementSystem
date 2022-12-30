@@ -1,29 +1,28 @@
 package com.example.queuemanagement
 
 import ClassFiles.*
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Adapter<BranchAdapter.BranchViewHolder>() {
-    private var listener: OnItemClickListener? = null
 
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
-
-    class BranchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class BranchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),View.OnClickListener {
         val tvName: TextView =itemView.findViewById(R.id.textView)
         val tvLocation: TextView = itemView.findViewById(R.id.textView2)
         val tvQueueList: TextView = itemView.findViewById(R.id.textView3)
-        //val tvID: TextView = itemView.findViewById(R.id.textView4)
-
+        val tvButton: TextView = itemView.findViewById(R.id.button4)
+        init {
+            tvButton.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            TODO("Not yet implemented")
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BranchViewHolder {
@@ -35,9 +34,9 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Ada
         holder.tvName.text = branchlist[position].name
         holder.tvLocation.text = branchlist[position].location.toString()
         holder.tvQueueList.text ="Waiting Customers "+branchlist[position].Queue
+        holder.tvButton.setOnClickListener {
+            Log.d("ItemClick", "Item at position $position clicked")
 
-        holder.itemView.setOnClickListener {
-            listener?.onItemClick(position)
         }
        // holder.tvID.text =branchlist[position].id.toString()
     }
@@ -45,6 +44,6 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>): RecyclerView.Ada
     override fun getItemCount(): Int {
         return branchlist.size
     }
+
+
 }
-
-

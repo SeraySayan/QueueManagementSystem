@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import android.widget.AdapterView
+import androidx.core.view.get
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,12 +41,6 @@ class BranchList : AppCompatActivity() {
                         branchList.add(branch!!)
                     }
                     val adapter = BranchAdapter(branchList)
-                    adapter.setOnItemClickListener(object : BranchAdapter.OnItemClickListener {
-                        override fun onItemClick(position: Int) {
-                            // Handle the click event
-                            Log.d("ItemClick", "Item at position $position clicked")
-                        }
-                    })
                     binding.recyclerView.adapter = adapter
                 }
             }
@@ -63,7 +58,12 @@ class BranchList : AppCompatActivity() {
             val intent = Intent(this, CustomerTransaction::class.java)
             startActivity(intent)
             intent.putExtra("id",branchList[position].id)
-        }*/
+        }*/        /*adapter.setOnItemClickListener(object : BranchAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            // Handle the click event
+                            Log.d("ItemClick", "Item at position $position clicked")
+                        }
+                    })*/
 
     }
 
