@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,71 +16,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/joinQueue"
         android:layout_width="173dp"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="261dp"
-        android:layout_marginEnd="114dp"
+        android:layout_marginTop="348dp"
+        android:layout_marginEnd="122dp"
         android:text="JOIN QUEUE" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/settings"
         android:layout_width="173dp"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="329dp"
-        android:layout_marginEnd="112dp"
-        android:text="LEAVE QUEUE" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="173dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="394dp"
-        android:layout_marginEnd="112dp"
-        android:text="VIEW BRANCH DETAILS" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="173dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="455dp"
-        android:layout_marginEnd="112dp"
-        android:text="VIEW QUEUE DETAILS" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="173dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="521dp"
-        android:layout_marginEnd="112dp"
+        android:layout_marginTop="425dp"
+        android:layout_marginEnd="118dp"
         android:text="SETTINGS" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/viewMap"
         android:layout_width="168dp"
         android:layout_height="64dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="190dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="268dp"
         android:insetTop="10dp"
         android:text="VIEW MAP" />
 
@@ -88,6 +55,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="200dp"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:text="Customer Menu:"
+        />
 
 
 </RelativeLayout>

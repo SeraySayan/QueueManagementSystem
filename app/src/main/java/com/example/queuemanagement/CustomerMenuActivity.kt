@@ -17,18 +17,23 @@ class CustomerMenuActivity : AppCompatActivity() {
         binding = CustomerMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val button1 = findViewById(R.id.button1) as Button
-        button1.setOnClickListener {
-            Toast.makeText(this@CustomerMenuActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+        binding.viewMap.setOnClickListener {
+          //  intent = Intent(this, MapsPage::class.java)
+          //  startActivity(intent)
 
         }
+        binding.settings.setOnClickListener(){
 
-        binding.button8.setOnClickListener(){
+           // intent = Intent(this, Settings::class.java)
+           // startActivity(intent)
 
-            intent = Intent(this, BranchList::class.java)
+
+        }
+        binding.joinQueue.setOnClickListener(){
+
+            //intent = Intent(this, BranchList::class.java)
+            intent = Intent(this, CustomerTransaction::class.java)
             startActivity(intent)
-
-
         }
 
 
