@@ -1,102 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+
     tools:context=".CustomerTransaction"
+    android:padding="20dp"
     android:background="@drawable/loginbkg">
 
 
-    <LinearLayout
-        android:layout_width="363dp"
-        android:layout_height="390dp"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="24dp">
 
-        <TextView
-            android:id="@+id/TransactionText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select Transaction:"
-            android:textAlignment="center"
-            android:textColor="@color/purple_700"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/WorDButton"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:background="#7733DD"
-            android:text="Withdraw/deposit money"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/paymentButton"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:background="#7733DD"
-            android:text="payments"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/currencyButton"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:background="#7733DD"
-            android:text="Investment to currency"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/newAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:background="#7733DD"
-            android:text="open new account"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
     <LinearLayout
         android:layout_width="363dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:background="@color/white"
         android:orientation="vertical"
+        android:layout_marginTop="300dp"
         android:padding="24dp">
-    <TextView
-        android:id="@+id/peopleCount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="count of the people in the queue" />
+
+        <TextView
+            android:id="@+id/peopleCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Count of the people in the queue"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/remainingTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="remaining time" />
+            android:text="Estimated remaining time"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
 
-    <Button
-        android:id="@+id/EnterButton"
+        <Button
+            android:id="@+id/EnterButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:background="#339933"
+            android:text="Enter Queue"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="Please select transaction type:"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        />
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="30dp"
-        android:background="#339933"
-        android:text="Enter Queue"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-
-        </LinearLayout>
+        android:layout_marginTop="200dp"
+        android:textSize="18sp"
+        android:background="#7777DD"/>
 
 
-</LinearLayout>
+
+
+
+
+</RelativeLayout>

@@ -13,36 +13,39 @@ import com.google.firebase.firestore.*
 class CustomerActiveQueue : AppCompatActivity() {
 
     private lateinit var binding: ActivityCustomerActiveQueueBinding
-    val database = FirestoreDB()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val database = FirestoreDB()
         val customerId = intent.getStringExtra("customer_id")
-        //var queue = mutableListOf<Any>()
-        var queue = ArrayList<Ticket>()
+        var queue = mutableListOf<Any>()
+        //var queue = ArrayList<Ticket>()
 
-        database.listenToChanges("/Queue/queue1/TicketsInQueue") { querySnapshot ->
+        database.listenToChanges("/Queue/queue1/TicketsInQueue") {
             database.getQueue2("/Queue/queue1/TicketsInQueue",customerId!!) { tickets ->
-               // queue = tickets
+                queue = tickets
             }
         }
 
                 // setting text
-                binding.queueNum2.setText(queue[0].id)
+               /* binding.queueNum2.setText(queue[0].id)
 
-                binding.remainingTime2.setText(queue[0].total_waited_time)
+                binding.remainingTime2.setText(queue[0].total_waited_time)*/
+        binding.queueNum2.setText("queue[0].id")
+
+        binding.remainingTime2.setText("queue[0].total_waited_time")
 
                 binding.LeaveQueueButton.setOnClickListener {
 
                     // TODO: implement leave queue
-                   queue[0].status= false
-                    queue.remove(queue[0])
+                   //queue[0].status= false
 
                     val intent = Intent(this, CustomerMenuActivity::class.java)
                     startActivity(intent)
                         }
+
                 }
 
             }
