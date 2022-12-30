@@ -24,7 +24,7 @@ class TestQueue : AppCompatActivity(){
             val ticketNo = binding.editTextTicketno.text.toString().toInt()
             val priority = binding.editTextPriority.text.toString().toInt()
             var time = FieldValue.serverTimestamp()
-            database.addData("/Queue/queue1/TicketsInQueue",Ticket(ticketNo,priority,process,1))
+            database.addData("/Queue/queue1/TicketsInQueue",Ticket(ticketNo,priority,process,"1"))
 
             var myList = mutableListOf<Any>()
 

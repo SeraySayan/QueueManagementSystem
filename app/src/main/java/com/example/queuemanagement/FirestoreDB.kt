@@ -107,7 +107,7 @@ class FirestoreDB  {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
                     val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + " " + result.indexOf(document) + "\n"
-                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["priority"].toString(),0,0 )
+                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["priority"].toString(),"customer_id" )
                     dataList.add(myticket)
                 }
                 callback(dataList)

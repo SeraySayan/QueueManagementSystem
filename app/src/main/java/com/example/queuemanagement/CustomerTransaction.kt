@@ -5,15 +5,14 @@ import android.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.queuemanagement.databinding.ActivityCustomerTransactionBinding
 
 //TODO: processType seçim UI daha iyi olabilir. Bir de bu sayfayı branchList sonrasında çağıracaz
 class CustomerTransaction : AppCompatActivity() {
-    public var processTime =0
-    public var processType=" "
-
     var database = FirestoreDB()
     lateinit var binding: ActivityCustomerTransactionBinding
 
@@ -36,8 +35,10 @@ class CustomerTransaction : AppCompatActivity() {
 
         // IN ACTUAL CASE, we will come here after the branch selection,
         // we got the info that which branch is selected. but for now,
-        // just initialize a random queue
+        // just initialize a random queue and intent values
         var selected_queue = "/Queue/queue1/TicketsInQueue"
+        var user_uid = "Hea84E2vA7NcJcXaI8cK7eWPNV82"
+
 
 
         database.listenToChanges(selected_queue) { querySnapshot ->
@@ -56,26 +57,66 @@ class CustomerTransaction : AppCompatActivity() {
 
             }
         }
-        binding.WorDButton.setOnClickListener {
+
+        var processType = ""
+        // Dropdown menu
+        val elements= arrayOf("Withdraw/Deposit Money","Payments","Investment to Currency","Open New Account")
+        val adapter= ArrayAdapter(this,R.layout.simple_spinner_item,elements)
+        binding.spinner.setAdapter(adapter)
+        binding.spinner.onItemSelectedListener = object:
+            AdapterView.OnItemSelectedListener{
+            @SuppressLint("SetTextI18n")
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(position==0){
+                    processType="Withdraw/Deposit Money"
+                }
+                else if(position==1){
+                    processType="Payments"
+                }
+                else if(position==2){
+                    processType="Investment to Currency"
+                }
+                else if(position==3){
+                    processType="Open New Account"
+                }
+            }
+            // ?
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
 
         }
 
-        binding.paymentButton.setOnClickListener {
-
-        }
-
-        binding.currencyButton.setOnClickListener {
 
 
-        }
-
-        binding.newAccountButton.setOnClickListener {
 
 
-        }
+
+
+
+
 
 
         binding.EnterButton.setOnClickListener{
+
+            println("\n$processType\n")
+
+            var userDoc = database.getDocumentByField("Customers","uid",user_uid){ data ->
+
+                var pri =  data?.get("priority").toString().toInt()
+
+                database.addData("/Queue/queue1/TicketsInQueue",Ticket(0,pri,processType,user_uid))
+
+            }
+
+
+
+
+
             // TODO: oluşan ticket'ı queue'ya sok.
             // TODO: Sonra Active Queue'ya intent at.
 
