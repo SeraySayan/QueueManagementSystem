@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.example.queuemanagement.databinding.ActivityTestqueueBinding
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.QuerySnapshot
 
 class TestQueue : AppCompatActivity(){
 
@@ -22,18 +23,6 @@ class TestQueue : AppCompatActivity(){
         binding = ActivityTestqueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val database = FirestoreDB()
-
-
-        var selected_queue = "/Queue/queue1/TicketsInQueue" //TODO: BURA BOZULDU
-        binding.switch1.setOnCheckedChangeListener { _, isChecked ->
-
-            if (isChecked) {
-                selected_queue = "/Queue/queue2/TicketsInQueue"
-            } else {
-                selected_queue = "/Queue/queue1/TicketsInQueue"
-            }
-
-        }
 
         var processType = ""
         // Dropdown menu
@@ -68,8 +57,33 @@ class TestQueue : AppCompatActivity(){
 
         }
 
+        // Switch for different queues
+        var selected_queue = "/Queue/queue1/TicketsInQueue" //Default value
+        binding.switch1.setOnCheckedChangeListener { _, isChecked ->
+
+            if (isChecked) {
+                selected_queue = "/Queue/queue2/TicketsInQueue"
+            } else {
+                selected_queue = "/Queue/queue1/TicketsInQueue"
+            }
+
+            // calling getQueue as well to dynamic update with switch changes
+            database.listenToChanges(selected_queue){ querySnapshot ->
+                var myList = mutableListOf<Ticket>()
+                database.getQueueTEST(selected_queue) { data ->
+                    myList = data
+                    var tempList = mutableListOf<String>()
+                    for (x in myList){
+                        tempList.add( x.id.toString() + " " + x.processType + " " + x.priority + "\n"   )
+                    }
+                    binding.textView3.setText(tempList.toString())
+                }
+            }
+        }
+
+        // Listening to queues and fetching it in real time
         var myList = mutableListOf<Ticket>()
-        database.listenToChanges(selected_queue) { querySnapshot ->
+        database.listenToChanges(selected_queue){ querySnapshot ->
             database.getQueueTEST(selected_queue) { data ->
 
                 myList = data
@@ -82,6 +96,7 @@ class TestQueue : AppCompatActivity(){
                 binding.textView3.setText(tempList.toString())
 
             }
+
         }
 
         binding.buttonAddTicket.setOnClickListener{
@@ -98,10 +113,6 @@ class TestQueue : AppCompatActivity(){
                 database.dequeue(selected_queue)
 
         }
-
-
-
-
 
         //TODO: ADD TICKET ÇALIŞIYOR, DEQUEUE TUŞUNU YAP        DONE!
         //TODO: TIMESTAMP İŞİNİ YAPB                            DONE!
