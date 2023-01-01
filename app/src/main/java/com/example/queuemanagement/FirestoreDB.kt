@@ -106,13 +106,14 @@ class FirestoreDB  {
 
         val CurrentIndex = mutableListOf<Int>()
         var WaitingTime = mutableListOf<Int>()
+        CurrentIndex.add(0)
         db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
 
                     if(document.data["customer_id"].toString().equals(uid)){
-                        CurrentIndex.add(result.indexOf(document))
+                        CurrentIndex[0] = (result.indexOf(document)+1)
                     }
                     else{
                         WaitingTime.add(map[document.get("processType")]!!)
