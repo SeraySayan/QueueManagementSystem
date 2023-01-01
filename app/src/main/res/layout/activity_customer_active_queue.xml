@@ -1,68 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    android:id="@+id/root"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@drawable/loginbkg"
 
     android:orientation="vertical"
-
-    tools:context=".CustomerActiveQueue"
-    android:background="@drawable/loginbkg">
+    tools:context=".CustomerActiveQueue">
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="214dp"
-        android:layout_height="73dp"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@color/black"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="20dp">
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="254dp"
+        app:cardBackgroundColor="@color/purple_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/remainingTime2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="remaining time"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="89dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="31dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="5dp"
+                android:text="min"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/estRemaining"
+                android:layout_width="109dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="19dp"
+                android:text="remaining time"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
-        android:layout_width="214dp"
-        android:layout_height="73dp"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@color/black"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="20dp">
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="254dp"
+        android:layout_marginEnd="40dp"
+        app:cardBackgroundColor="@color/purple_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/queueNum2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="your number"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="89dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="31dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="5dp"
+                android:text="position"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/queueNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="19dp"
+                android:text="your number"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
-
-
 
     <Button
         android:id="@+id/LeaveQueueButton"
-        android:layout_width="match_parent"
+        android:layout_width="340dp"
         android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Leave Queue"
-        android:textSize="18sp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="156dp"
         android:background="#FF5555"
+        android:text="Leave Queue"
         android:textColor="@color/white"
-        />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

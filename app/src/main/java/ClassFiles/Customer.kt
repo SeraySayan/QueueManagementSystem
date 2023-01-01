@@ -28,9 +28,5 @@ class Customer : User{
         this.id = id
     }
 
-    fun createTicket(priority: Int, processType:String): Ticket{ // TODO
-
-        return Ticket(1,priority,processType,this.id)
-    }
 
 }

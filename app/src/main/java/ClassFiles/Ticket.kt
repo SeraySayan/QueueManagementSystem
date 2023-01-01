@@ -12,21 +12,10 @@ class Ticket {
     var processType = ""
     var total_waited_time = 0
     var served_employee =""
-    var customer_id = 0
+    var customer_id = ""
 
     // Constructor for creation from customer
-    constructor(id:Int, priority:Int,  processType:String, total_waited_time: Int, customer_id:Int ){
-        this.id = id
-        this.priority = priority
-        this.processType = processType
-        this.customer_id = customer_id
-        this.total_waited_time= total_waited_time
-        this.date_time = FieldValue.serverTimestamp()
-        this.status = true // new created tickets will be active
-
-    }
-
-    constructor(id:Int, priority:Int,  processType:String, customer_id:Int ){
+    constructor(id:Int, priority:Int,  processType:String, customer_id:String ){
         this.id = id
         this.priority = priority
         this.processType = processType
@@ -43,12 +32,16 @@ class Ticket {
         this.processType = ""
         this.total_waited_time = 0
         this.served_employee =""
-        this.customer_id = 0
+        this.customer_id = ""
 
     }
 
     fun LeaveQueue(){   // TODO
         println("You used LeaveQueue")
+    }
+
+    fun getterProcessType() : String{
+        return this.processType
     }
 
 

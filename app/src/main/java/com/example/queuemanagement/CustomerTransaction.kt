@@ -2,91 +2,114 @@ package com.example.queuemanagement
 
 import ClassFiles.*
 import android.R
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.queuemanagement.databinding.ActivityCustomerTransactionBinding
 
-
+//TODO: processType seçim UI daha iyi olabilir. Bir de bu sayfayı branchList sonrasında çağıracaz
 class CustomerTransaction : AppCompatActivity() {
-    public var processTime =0
-    public var processType=" "
-
     var database = FirestoreDB()
     lateinit var binding: ActivityCustomerTransactionBinding
-    
-    
+
+
+    // Hashmap for keeping the processType names and their estimated time.
+    var map: HashMap<String, Int> = hashMapOf("Withdraw/Deposit Money" to 20,
+                                              "Payments" to 25,
+                                              "Investment to Currency" to 30,
+                                              "Open New Account" to 40)
+
+    // also, hashmap can be updated dynamically with built in methods.
+
+    @SuppressLint("SetTextI18n") // Supressing a weird warning (NOT IMPORTANT, JUST KEEP IT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        var c2 = Customer(1223,"Aslı","Yıldırım",
-            "aslı.yıldırım@metu.edu.tr","654321",
-            "25/12/2022","+905345678","İstanbul")
+        // Getting selected queue and user uid from previous activity
+        var selected_queue = intent.getStringExtra("queue_location").toString()
+        var user_uid = intent.getStringExtra("uid").toString()
 
 
-       // var queue = mutableListOf<Any>()
-        var queue = ArrayList<Ticket>()
+        database.listenToChanges(selected_queue) { querySnapshot ->
 
-        database.listenToChanges("/Queue/queue1/TicketsInQueue") { querySnapshot ->
+            //TODO: TEST versiyonunda hata var. normal hali çalışıyor. queue size çalışıyor, timing için class yapmayı dene
+            database.getQueueTEST(selected_queue) { tickets ->
 
-            database.getQueue("/Queue/queue1/TicketsInQueue") { tickets ->
+                var queue_size =  tickets.size  // getting the queue size
+                binding.peopleCount.setText("There are $queue_size customers in the line")
 
-               // queue = tickets
+                var est_wait_time = 0
+                for (ticket in tickets){
+                    est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
+                }
+                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time")
 
             }
         }
-        val count= queue.count()
-        var totalTime = 0
-        binding.WorDButton.setOnClickListener {
 
-            processTime= 20
-            processType="Withdraw/Deposit Money"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
-
-        }
-
-        binding.paymentButton.setOnClickListener {
-
-            processTime= 25
-            processType="Payments"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
-        }
-
-        binding.currencyButton.setOnClickListener {
-
-            processTime= 30
-            processType="Investment to Currency"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
-        }
-
-        binding.newAccountButton.setOnClickListener {
-
-            processTime= 40
-            processType="Open New Account"
-            totalTime= queue[queue.size-1].total_waited_time + processTime
-            binding.peopleCount.setText(count.toString())
-            binding.remainingTime.setText(totalTime.toString())
+        var processType = ""
+        // Dropdown menu
+        val elements= arrayOf("Withdraw/Deposit Money","Payments","Investment to Currency","Open New Account")
+        val adapter= ArrayAdapter(this,R.layout.simple_spinner_item,elements)
+        binding.spinner.setAdapter(adapter)
+        binding.spinner.onItemSelectedListener = object:
+            AdapterView.OnItemSelectedListener{
+            @SuppressLint("SetTextI18n")
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(position==0){
+                    processType="Withdraw/Deposit Money"
+                }
+                else if(position==1){
+                    processType="Payments"
+                }
+                else if(position==2){
+                    processType="Investment to Currency"
+                }
+                else if(position==3){
+                    processType="Open New Account"
+                }
+            }
+            // ?
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
 
         }
 
 
         binding.EnterButton.setOnClickListener{
 
-            database.addData("/Queue/queue1/TicketsInQueue",Ticket( queue[queue.size-1].id+1,0, processType,totalTime,c2.id))
-            val intent = Intent(this, CustomerActiveQueue::class.java)
-            startActivity(intent)
-            intent.putExtra("customer_id",c2.id)
+            var userDoc = database.getDocumentByField("Customers","uid",user_uid){ data ->
+
+                var pri =  data?.get("priority").toString().toInt()
+
+                database.addData(selected_queue,Ticket(0,pri,processType,user_uid))
+
+                intent = Intent(this, CustomerActiveQueue::class.java)
+                intent.putExtra("queue",selected_queue)
+                intent.putExtra("uid", user_uid)
+                startActivity(intent)
+
+            }
+
+
+
+
+
+            // TODO: oluşan ticket'ı queue'ya sok.
+            // TODO: Sonra Active Queue'ya intent at.
+
         }
 
 

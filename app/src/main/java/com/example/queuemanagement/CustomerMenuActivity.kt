@@ -16,21 +16,34 @@ class CustomerMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = CustomerMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var user_uid = intent.getStringExtra("uid")
 
-        val button1 = findViewById(R.id.button1) as Button
-        button1.setOnClickListener {
-            Toast.makeText(this@CustomerMenuActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-
-        }
-
-        binding.button8.setOnClickListener(){
-
+        binding.button1.setOnClickListener(){
             intent = Intent(this, BranchList::class.java)
+            intent.putExtra("uid", user_uid)
+            startActivity(intent)
+        }
+        binding.button3.setOnClickListener {
+            Toast.makeText(this@CustomerMenuActivity, "MAP", Toast.LENGTH_SHORT).show()
+        }
+        binding.button2.setOnClickListener {
+            Toast.makeText(this@CustomerMenuActivity, "SETTINGS", Toast.LENGTH_SHORT).show()
+            intent = Intent(this, SettingPage::class.java)
             startActivity(intent)
 
-
         }
 
+
+
+        // TEMP BUTTONS FOR DEBUG !!!
+        binding.button5.setOnClickListener(){
+            intent = Intent(this, CustomerActiveQueue::class.java)
+            startActivity(intent)
+        }
+        binding.button6.setOnClickListener(){
+            intent = Intent(this, TestQueue::class.java)
+            startActivity(intent)
+        }
 
 
 

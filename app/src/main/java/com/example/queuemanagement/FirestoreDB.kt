@@ -1,5 +1,6 @@
 package com.example.queuemanagement
 
+import ClassFiles.Ticket
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +22,11 @@ class FirestoreDB  {
     // Getting Firestore object instance
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    var map: HashMap<String, Int> = hashMapOf("Withdraw/Deposit Money" to 20,
+        "Payments" to 25,
+        "Investment to Currency" to 30,
+        "Open New Account" to 40)
+
 
     // getData() will take a collection dir, and returns a MutableList of documents.
     // Using with a listener (listenToChanges()) is recommended
@@ -37,6 +43,26 @@ class FirestoreDB  {
             }
             .addOnFailureListener { exception ->
                 Log.d("getData", "Error getting documents: ", exception)
+            }
+    }
+
+    // This function will take the collection, field and its value. Then finds the correct
+    // document and return its Document Snapshot.
+    fun getDocumentByField(collectionName: String, fieldName: String, fieldValue: String?, callback: (DocumentSnapshot?) -> Unit) {
+        val query = db.collection(collectionName).whereEqualTo(fieldName, fieldValue)
+        val task = query.get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    callback(documents.first())
+                }
+                else {
+                    Log.d("getDocumentSnapshot", "Success but query is null")
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getDocumentSnapshot", "FAILED", exception)
+                callback(null)
             }
     }
 
@@ -60,14 +86,13 @@ class FirestoreDB  {
     // the queue query for firestore Index.
     fun getQueue(collection: String, callback: (MutableList<Any>) -> Unit) {
         val dataList = mutableListOf<Any>()
-        db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
-            .whereEqualTo("status",true)
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = document.data["tickets"].toString()  +  document.data["servedEmp"].toString()
+                    val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + " " + result.indexOf(document) + "\n"
                     dataList.add(data)
                 }
                 callback(dataList)
@@ -77,17 +102,43 @@ class FirestoreDB  {
             }
     }
 
-    fun getQueue2(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
-        val dataList = mutableListOf<Any>()
-        db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
-            .whereEqualTo("status",true).whereEqualTo("customer_id",lookFor)
+    fun getQueueActive(collection: String, uid : String , callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
+
+        val CurrentIndex = mutableListOf<Int>()
+        var WaitingTime = mutableListOf<Int>()
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+
+                    if(document.data["customer_id"].toString().equals(uid)){
+                        CurrentIndex.add(result.indexOf(document))
+                    }
+                    else{
+                        WaitingTime.add(map[document.get("processType")]!!)
+                    }
+
+                }
+                callback(CurrentIndex, WaitingTime) // BURALARDA BİŞEY VAR
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getQueue", "Error getting documents: ", exception)
+            }
+    }
+
+
+
+    // An alternative version, for callback "Ticket" objects.
+    fun getQueueTEST(collection: String, callback: (MutableList<Ticket>) -> Unit) {
+        val dataList = mutableListOf<Ticket>()
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = document.data["tickets"].toString()  +  document.data["servedEmp"].toString()
-                    dataList.add(data)
+                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["processType"].toString(),"customer_id" )
+                    dataList.add(myticket)
                 }
                 callback(dataList)
             }
@@ -114,9 +165,26 @@ class FirestoreDB  {
             .addOnFailureListener { exception ->
                 Log.d("Dequeue", "Error ", exception)
             }
-
-
     }
+
+
+    // Same as dequeue, but instead of indexed query, it directly
+    // searches for input ticket_id and deletes that ticket
+    // TODO: TEST THIS FUCNTION
+    fun leaveQueue(collection: String, uid : String){
+        db.collection(collection).whereEqualTo("customer_id",uid).limit(1).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    document.reference.delete() // TODO: DO NOT DELETE ANYTHING!
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Dequeue", "Error ", exception)
+            }
+    }
+
+
+
 
     // Method for adding data to Firestore. Can handle any type of data / object
     fun addData(collection: String, data: Any) {

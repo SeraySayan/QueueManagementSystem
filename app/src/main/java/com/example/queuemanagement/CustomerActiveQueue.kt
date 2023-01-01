@@ -19,33 +19,38 @@ class CustomerActiveQueue : AppCompatActivity() {
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val customerId = intent.getStringExtra("customer_id")
-        //var queue = mutableListOf<Any>()
-        var queue = ArrayList<Ticket>()
 
-        database.listenToChanges("/Queue/queue1/TicketsInQueue") { querySnapshot ->
-            database.getQueue2("/Queue/queue1/TicketsInQueue",customerId!!) { tickets ->
-               // queue = tickets
+        // Getting User uid and selected queue directory
+        var uid = intent.getStringExtra("uid").toString()
+        var selected_queue = intent.getStringExtra("queue").toString()
+
+
+        database.listenToChanges(selected_queue) { querySnapshot ->
+
+            database.getQueueActive(selected_queue, uid) { tickets, wait_times ->
+
+                binding.queueNum.setText(tickets[0].toString())
+
+                var total_time = 0
+                for (x in wait_times){
+                    total_time += x
+                }
+
+                binding.estRemaining.setText(total_time.toString())
+
             }
         }
 
-                // setting text
-                binding.queueNum2.setText(queue[0].id)
 
-                binding.remainingTime2.setText(queue[0].total_waited_time)
+        //TODO: Implement LeaveQueue
+        binding.LeaveQueueButton.setOnClickListener {
+            database.leaveQueue(selected_queue,uid)
+            finish()
 
-                binding.LeaveQueueButton.setOnClickListener {
+        }
+    }
 
-                    // TODO: implement leave queue
-                   queue[0].status= false
-                    queue.remove(queue[0])
-
-                    val intent = Intent(this, CustomerMenuActivity::class.java)
-                    startActivity(intent)
-                        }
-                }
-
-            }
+}
 
 
 
