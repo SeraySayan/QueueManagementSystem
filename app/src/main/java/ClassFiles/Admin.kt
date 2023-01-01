@@ -8,24 +8,26 @@ class Admin : User {
     private var sa = 0
 
 
-    constructor(id: Int,
+    constructor(id: String,
                 name: String,
                 surname: String,
                 email: String,
                 password: String,
                 reg_date: String,
+                age: Int
 
-    ) : super(id,name,surname,email,password,reg_date){
+    ) : super(id,name,surname,email,password,reg_date,age){
 
     }
 
     constructor(){
-        id = 0
+        id = ""
         name = ""
         surname = ""
         email = ""
         password = ""// TODO: make this type "Date" class.
         reg_date = ""
+        age = 0
 
     }
 
