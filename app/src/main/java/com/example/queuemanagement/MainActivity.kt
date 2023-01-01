@@ -3,10 +3,13 @@ package com.example.queuemanagement
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.queuemanagement.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+
 // This activity is responsible for displaying the login screen to the user
 // and handling the user's login attempt.
 
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     // FirebaseAuth instance for authenticating the user
     private lateinit var firebaseAuth: FirebaseAuth
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize FirebaseAuth instance
         firebaseAuth = FirebaseAuth.getInstance()
 
+
         // Set click listener for login button
         binding.loginButton.setOnClickListener {
             val email = binding.mail.text.toString()
@@ -41,10 +46,28 @@ class MainActivity : AppCompatActivity() {
 
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        // If login is successful, start the TestQueue activity
 
-                        intent = Intent(this, SettingPage::class.java)
-                        startActivity(intent)
+                        if ((email.split("@"))[1] == "employee.com"){
+                            intent = Intent(this, EmployeeMenu::class.java)
+                            startActivity(intent)
+                        }
+
+                        /*val document = db.document(firebaseAuth.currentUser?.uid.toString())
+                        if(document.parent.equals("Customers")){
+                            intent = Intent(this, CustomerMenuActivity::class.java)
+                            startActivity(intent)
+
+                        }
+                        else if (document.parent.equals("Employees")){
+
+                            intent = Intent(this, EmployeeMenu::class.java)
+                            startActivity(intent)
+                        }*/
+                        else{
+                            intent = Intent(this, CustomerMenuActivity::class.java)
+                            startActivity(intent)
+                        }
+
 
 
                     } else {
@@ -115,6 +138,10 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
 }
 
 

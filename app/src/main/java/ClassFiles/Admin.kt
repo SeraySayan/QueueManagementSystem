@@ -14,9 +14,8 @@ class Admin : User {
                 email: String,
                 password: String,
                 reg_date: String,
-                phone_no: String,
-                address: String
-    ) : super(id,name,surname,email,password,reg_date,phone_no,address){
+
+    ) : super(id,name,surname,email,password,reg_date){
 
     }
 
@@ -27,8 +26,7 @@ class Admin : User {
         email = ""
         password = ""// TODO: make this type "Date" class.
         reg_date = ""
-        phone_no = ""
-        address = ""
+
     }
 
 
