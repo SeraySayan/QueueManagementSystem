@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
                         if ((email.split("@"))[1] == "employee.com"){
                             intent = Intent(this, EmployeeMenu::class.java)
-                            intent.putExtra("uid", firebaseAuth.uid)
+
                             startActivity(intent)
                         }
 
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                         }*/
                         else{
                             intent = Intent(this, CustomerMenuActivity::class.java)
-                            intent.putExtra("uid", firebaseAuth.uid)
+
                             startActivity(intent)
                         }
 
@@ -140,6 +140,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
 
 

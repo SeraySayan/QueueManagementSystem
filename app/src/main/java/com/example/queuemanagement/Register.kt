@@ -1,18 +1,18 @@
 package com.example.queuemanagement
 
 
+import ClassFiles.Customer
+import ClassFiles.Employee
 import android.content.Intent
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.queuemanagement.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.*
-import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 // This activity is responsible for handling the user's registration process.
 
@@ -24,8 +24,6 @@ class Register : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
-    // FirebaseDatabase instance for storing the user's information
-    private lateinit var database: FirebaseDatabase
     // Object for checking network connectivity
 
     private lateinit var cld : ConnectionLive
@@ -35,14 +33,15 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         // Check network connectivity and show/hide views accordingly
 
         checkNetworkConnection()
 
+
         // Initialize FirebaseAuth and FirebaseDatabase instances
 
         firebaseAuth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
 
         // Set click listener for the register button
 
@@ -72,8 +71,12 @@ class Register : AppCompatActivity() {
 
     // Function for handling the user registration process
     private fun performRegister(){
+        val database = FirestoreDB()
+
 
         // Get the values entered by the user in the edit text fields
+        val name = binding.name.text.toString()
+        val surname = binding.surname.text.toString()
         val email = binding.mail.text.toString()
         val password = binding.password.text.toString()
         val repassword = binding.rePasswaord.text.toString()
@@ -90,29 +93,25 @@ class Register : AppCompatActivity() {
 
                     if(it.isSuccessful){
                         // If the user is successfully created, store their information in the database
-                        val databaseRef = database.getReferenceFromUrl("https://bankq-a7a84-default-rtdb.firebaseio.com/").child("users")
-                        val users = Users(email,password,birthday,firebaseAuth.currentUser!!.uid)
-                        databaseRef.setValue(users).addOnCompleteListener{
-                            if (it.isSuccessful){
-                                // If the user's information is successfully stored, start the MainActivity
+                        if (email.split("@")[1] == "employee.com"){
 
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-                            }
+                            val employee = Employee(1,name,surname,email,password,birthday)
+                            database.addData("Employees",employee)
+
+                        }
+                        else if(email.split("@")[1] != "employee.com"){
+
+                            val users = Customer(1,name,surname,email,password,birthday)
+                            database.addData("Customers",users)
+
                         }
 
-
-
+                        val intent = Intent (this,MainActivity::class.java)
+                        startActivity(intent)
                     }
 
                 }
                     .addOnFailureListener {
-                        /*val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
-                        } else {
-                            TODO("VERSION.SDK_INT < O")
-                        }
-                        val date = LocalDate.parse(birthday, formatter)*/
                         when (it) {
                             is FirebaseAuthUserCollisionException -> {
 
@@ -128,10 +127,6 @@ class Register : AppCompatActivity() {
                                 Toast.makeText(this,"Email address is not available format!",Toast.LENGTH_SHORT).show()
 
                             }
-                            /*else if (!date.format(formatter).equals(birthday)){
-                                Toast.makeText(this,"Birthday format is not available!",Toast.LENGTH_SHORT).show()
-
-                            }*/
                             else -> {
                                 Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
 
