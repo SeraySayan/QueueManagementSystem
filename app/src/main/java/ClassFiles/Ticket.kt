@@ -40,6 +40,10 @@ class Ticket {
         println("You used LeaveQueue")
     }
 
+    fun getterProcessType() : String{
+        return this.processType
+    }
+
 
 
 

@@ -41,7 +41,7 @@ class CustomerMenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.button6.setOnClickListener(){
-            intent = Intent(this, CustomerTransaction::class.java)
+            intent = Intent(this, TestQueue::class.java)
             startActivity(intent)
         }
 

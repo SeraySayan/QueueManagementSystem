@@ -25,7 +25,6 @@ class CustomerTransaction : AppCompatActivity() {
 
     // also, hashmap can be updated dynamically with built in methods.
 
-
     @SuppressLint("SetTextI18n") // Supressing a weird warning (NOT IMPORTANT, JUST KEEP IT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +32,7 @@ class CustomerTransaction : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        // IN ACTUAL CASE, we will come here after the branch selection,
-        // we got the info that which branch is selected. but for now,
-        // just initialize a random queue and intent values
-
-        //var selected_queue = "/Queue/queue1/TicketsInQueue"
-        //var user_uid = "Hea84E2vA7NcJcXaI8cK7eWPNV82"
+        // Getting selected queue and user uid from previous activity
         var selected_queue = intent.getStringExtra("queue_location").toString()
         var user_uid = intent.getStringExtra("uid").toString()
 
@@ -46,14 +40,14 @@ class CustomerTransaction : AppCompatActivity() {
         database.listenToChanges(selected_queue) { querySnapshot ->
 
             //TODO: TEST versiyonunda hata var. normal hali çalışıyor. queue size çalışıyor, timing için class yapmayı dene
-            database.getQueue(selected_queue) { tickets ->
+            database.getQueueTEST(selected_queue) { tickets ->
 
                 var queue_size =  tickets.size  // getting the queue size
                 binding.peopleCount.setText("There are $queue_size customers in the line")
 
                 var est_wait_time = 0
                 for (ticket in tickets){
-                 //   est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
+                    est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
                 }
                 binding.remainingTime.setText("Estimated waiting time is: $est_wait_time")
 
@@ -94,15 +88,6 @@ class CustomerTransaction : AppCompatActivity() {
         }
 
 
-
-
-
-
-
-
-
-
-
         binding.EnterButton.setOnClickListener{
 
             var userDoc = database.getDocumentByField("Customers","uid",user_uid){ data ->
@@ -111,9 +96,10 @@ class CustomerTransaction : AppCompatActivity() {
 
                 database.addData(selected_queue,Ticket(0,pri,processType,user_uid))
 
-                //intent = Intent(this, CustomerActiveQueue::class.java)
-                //intent.putExtra("uid", user_uid)
-                //startActivity(intent)
+                intent = Intent(this, CustomerActiveQueue::class.java)
+                intent.putExtra("queue",selected_queue)
+                intent.putExtra("uid", user_uid)
+                startActivity(intent)
 
             }
 

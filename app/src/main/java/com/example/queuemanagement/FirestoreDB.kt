@@ -22,6 +22,11 @@ class FirestoreDB  {
     // Getting Firestore object instance
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    var map: HashMap<String, Int> = hashMapOf("Withdraw/Deposit Money" to 20,
+        "Payments" to 25,
+        "Investment to Currency" to 30,
+        "Open New Account" to 40)
+
 
     // getData() will take a collection dir, and returns a MutableList of documents.
     // Using with a listener (listenToChanges()) is recommended
@@ -97,6 +102,32 @@ class FirestoreDB  {
             }
     }
 
+    fun getQueueActive(collection: String, uid : String , callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
+
+        val CurrentIndex = mutableListOf<Int>()
+        var WaitingTime = mutableListOf<Int>()
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+
+                    if(document.data["customer_id"].toString().equals(uid)){
+                        CurrentIndex.add(result.indexOf(document))
+                    }
+                    else{
+                        WaitingTime.add(map[document.get("processType")]!!)
+                    }
+
+                }
+                callback(CurrentIndex, WaitingTime) // BURALARDA BİŞEY VAR
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getQueue", "Error getting documents: ", exception)
+            }
+    }
+
+
+
     // An alternative version, for callback "Ticket" objects.
     fun getQueueTEST(collection: String, callback: (MutableList<Ticket>) -> Unit) {
         val dataList = mutableListOf<Ticket>()
@@ -106,33 +137,8 @@ class FirestoreDB  {
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + " " + result.indexOf(document) + "\n"
-                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["priority"].toString(),"customer_id" )
+                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["processType"].toString(),"customer_id" )
                     dataList.add(myticket)
-                }
-                callback(dataList)
-            }
-            .addOnFailureListener { exception ->
-                Log.d("getQueue", "Error getting documents: ", exception)
-            }
-    }
-
-    /**
-     *
-     * getQueue2() ne için yapıldı açıklayın lütfen (comment atın şu kodlara)
-     *
-     * */
-    fun getQueue2(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
-        val dataList = mutableListOf<Any>()
-        db.collection(collection).orderBy("priority",Query.Direction.ASCENDING).orderBy("date_time")
-            .whereEqualTo("status",true).whereEqualTo("customer_id",lookFor)
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-
-                    // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = document.data["tickets"].toString()  +  document.data["servedEmp"].toString()
-                    dataList.add(data)
                 }
                 callback(dataList)
             }
@@ -165,8 +171,8 @@ class FirestoreDB  {
     // Same as dequeue, but instead of indexed query, it directly
     // searches for input ticket_id and deletes that ticket
     // TODO: TEST THIS FUCNTION
-    fun leaveQueue(collection: String, ticket_id : Int){
-        db.collection(collection).whereEqualTo("id",ticket_id).limit(1).get()
+    fun leaveQueue(collection: String, uid : String){
+        db.collection(collection).whereEqualTo("customer_id",uid).limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     document.reference.delete() // TODO: DO NOT DELETE ANYTHING!
