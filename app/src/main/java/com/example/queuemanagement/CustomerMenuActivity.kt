@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.example.queuemanagement.databinding.CustomerMenuBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 class CustomerMenuActivity : AppCompatActivity() {
 
     private lateinit var binding: CustomerMenuBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +29,8 @@ class CustomerMenuActivity : AppCompatActivity() {
             Toast.makeText(this@CustomerMenuActivity, "MAP", Toast.LENGTH_SHORT).show()
         }
         binding.button2.setOnClickListener {
-            Toast.makeText(this@CustomerMenuActivity, "SETTINGS", Toast.LENGTH_SHORT).show()
             intent = Intent(this, SettingPage::class.java)
+            intent.putExtra("uid",user_uid)
             startActivity(intent)
 
         }
