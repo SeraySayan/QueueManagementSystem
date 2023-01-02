@@ -1,22 +1,25 @@
 package ClassFiles
 
+import android.webkit.WebSettings.RenderPriority
+
 class Customer : User{
 
+    var priority = 1
+
     constructor(
-        id: String,
+        uid: String,
         name: String,
         surname: String,
         email: String,
         password: String,
         reg_date: String,
         age: Int
-
-        ) : super(id,name,surname,email,password,reg_date,age){
+        ) : super(uid,name,surname,email,password,reg_date,age){
 
     }
 
     constructor(){
-        id = ""
+        uid = ""
         name = ""
         surname = ""
         email = ""
@@ -27,7 +30,7 @@ class Customer : User{
     }
 
     constructor(id:String){ // DEBUG Purposes
-        this.id = id
+        this.uid = id
     }
 
 

@@ -15,7 +15,7 @@ class Employee : User {
     }
 
     constructor(){
-        id = ""
+        uid = ""
         name = ""
         surname = ""
         email = ""

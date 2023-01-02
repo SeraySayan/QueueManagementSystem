@@ -21,7 +21,7 @@ class Admin : User {
     }
 
     constructor(){
-        id = ""
+        uid = ""
         name = ""
         surname = ""
         email = ""

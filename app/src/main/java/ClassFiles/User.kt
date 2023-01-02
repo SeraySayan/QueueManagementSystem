@@ -2,7 +2,7 @@ package ClassFiles
 
 abstract class User {
 
-    var id: String = ""
+    var uid: String = ""
     var name: String = ""
     var surname: String = ""
     var email: String = ""
@@ -13,7 +13,7 @@ abstract class User {
     constructor() // sildiğim zaman çalışmıyor, neden bilmiyorum xd
 
     constructor(id: String, name: String, surname: String, email: String, password: String, regDate: String, age: Int){
-        this.id = id
+        this.uid = id
         this.name = name
         this.surname = surname
         this.email = email
@@ -28,7 +28,7 @@ abstract class User {
     }
 
     open fun getterID(): String {
-        return this.id
+        return this.uid
     }
 
 }
