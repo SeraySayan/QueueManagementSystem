@@ -1,9 +1,12 @@
 package com.example.queuemanagement
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupWindow
 import com.example.queuemanagement.databinding.ActivityMainBinding
+import com.example.queuemanagement.databinding.ActivityPopUpBinding
 import com.example.queuemanagement.databinding.ActivitySettingPageBinding
 // This activity is responsible for displaying the setting page for the app.
 
@@ -20,7 +23,15 @@ class SettingPage : AppCompatActivity() {
         setContentView(binding.root)
         // Check network connectivity and show/hide views accordingly
 
-        checkNetworkConnection()    }
+        checkNetworkConnection()
+
+        binding.logOutClick.setOnClickListener{
+
+
+            val intent = Intent(this, PopUp::class.java)
+            startActivity(intent)
+        }
+    }
     // Function for checking network connectivity and showing/hiding views accordingly
 
     private fun checkNetworkConnection() {
