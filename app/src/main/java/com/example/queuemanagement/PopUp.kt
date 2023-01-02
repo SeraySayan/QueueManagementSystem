@@ -45,42 +45,16 @@ class PopUp : AppCompatActivity() {
             startActivity(intent)
         }
         binding.cancelButton.setOnClickListener {
-            onBackPressed()
+            onPressed()
         }
     }
 
-    override fun onBackPressed() {
+    private fun onPressed() {
         // Fade animation for the background of Popup Window when you press the back button
         val alpha = 100 // between 0-255
         val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#000000"), alpha)
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), alphaColor, Color.TRANSPARENT)
         colorAnimation.duration = 500 // milliseconds
-        colorAnimation.addUpdateListener { animator ->
-            binding.popupBackground.setBackgroundColor(
-                animator.animatedValue as Int
-            )
-        }
-
-        // Fade animation for the Popup Window when you press the back button
-        binding.popupViewWithBorder.animate().alpha(0f).setDuration(500).setInterpolator(
-            DecelerateInterpolator()
-        ).start()
-
-        // After animation finish, close the Activity
-        colorAnimation.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                finish()
-                overridePendingTransition(0, 0)
-            }
-        })
-        colorAnimation.start()
-    }
-    fun onPressed() {
-        // Fade animation for the background of Popup Window when you press the back button
-        val alpha = 100 // between 0-255
-        val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#000000"), alpha)
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), alphaColor, Color.TRANSPARENT)
-        colorAnimation.duration = 700 // milliseconds
         colorAnimation.addUpdateListener { animator ->
             binding.popupBackground.setBackgroundColor(
                 animator.animatedValue as Int
