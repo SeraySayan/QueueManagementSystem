@@ -49,7 +49,7 @@ class CustomerTransaction : AppCompatActivity() {
                 for (ticket in tickets){
                     est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
                 }
-                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time")
+                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time min.")
 
             }
         }
