@@ -19,9 +19,9 @@ class CustomerTransaction : AppCompatActivity() {
 
     // Hashmap for keeping the processType names and their estimated time.
     var map: HashMap<String, Int> = hashMapOf("Withdraw/Deposit Money" to 20,
-                                              "Payments" to 25,
-                                              "Investment to Currency" to 30,
-                                              "Open New Account" to 40)
+        "Payments" to 25,
+        "Investment to Currency" to 30,
+        "Open New Account" to 40)
 
     // also, hashmap can be updated dynamically with built in methods.
 
@@ -35,9 +35,29 @@ class CustomerTransaction : AppCompatActivity() {
         // Getting selected queue and user uid from previous activity
         var selected_queue = intent.getStringExtra("queue_location").toString()
         var user_uid = intent.getStringExtra("uid").toString()
+        var priority=1//initialization of priority
+        // TODO:ilk bunu alıp yanlış değerleri gösteriyor, gir çık yapınca doğru değerleri gösteriyor,düzelt
+        //taking the priority from database
+        var userDoc = database.getDocumentByField("Customers","uid",user_uid){ data ->
+             priority =  data?.get("priority").toString().toInt()
+        }
 
+        database.listenToChanges(selected_queue){querySnapshot ->
+            database.getTransactionQueue(selected_queue, priority){ queueSize, wait_times->
+                var queue_size =  queueSize.size  // getting the queue size
+                binding.peopleCount.setText("There are $queue_size customers in the line")
 
-        database.listenToChanges(selected_queue) { querySnapshot ->
+                var est_wait_time = 0
+                for (x in wait_times) {
+                    est_wait_time += x
+                }
+                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time min.")
+
+            }
+
+        }
+
+        /*database.listenToChanges(selected_queue) { querySnapshot ->
 
             //TODO: TEST versiyonunda hata var. normal hali çalışıyor. queue size çalışıyor, timing için class yapmayı dene
             database.getQueueTEST(selected_queue) { tickets ->
@@ -52,7 +72,7 @@ class CustomerTransaction : AppCompatActivity() {
                 binding.remainingTime.setText("Estimated waiting time is: $est_wait_time min.")
 
             }
-        }
+        }*/
 
         var processType = ""
         // Dropdown menu
@@ -99,6 +119,7 @@ class CustomerTransaction : AppCompatActivity() {
                 intent = Intent(this, CustomerActiveQueue::class.java)
                 intent.putExtra("queue",selected_queue)
                 intent.putExtra("uid", user_uid)
+                intent.putExtra("priority",pri)//sending to the active queue
                 startActivity(intent)
 
             }

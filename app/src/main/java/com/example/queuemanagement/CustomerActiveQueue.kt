@@ -23,25 +23,25 @@ class CustomerActiveQueue : AppCompatActivity() {
         // Getting User uid and selected queue directory
         var uid = intent.getStringExtra("uid").toString()
         var selected_queue = intent.getStringExtra("queue").toString()
-
+        var priority = intent.getIntExtra("priority",1)
+        //var priority=2
+        //it only takes the ones whose priorities are bigger or equal to the this ticket and wait_times
 
         database.listenToChanges(selected_queue) { querySnapshot ->
-
-            database.getQueueActive(selected_queue, uid) { tickets, wait_times ->
+            database.getQueueActive2(selected_queue, uid, priority) { tickets, wait_times ->
 
                 binding.queueNum.setText(tickets[0].toString())
 
                 var total_time = 0
-                for (x in wait_times){
+                for (x in wait_times) {
                     total_time += x
                 }
 
                 binding.estRemaining.setText(total_time.toString())
 
             }
+
         }
-
-
         //TODO: Implement LeaveQueue
         binding.LeaveQueueButton.setOnClickListener {
             database.leaveQueue(selected_queue,uid)
@@ -51,8 +51,3 @@ class CustomerActiveQueue : AppCompatActivity() {
     }
 
 }
-
-
-
-
-
