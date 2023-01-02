@@ -4,7 +4,7 @@ import android.webkit.WebSettings.RenderPriority
 
 class Customer : User{
 
-    var priority = 1
+     var priority: Int=0
 
     constructor(
         uid: String,
@@ -13,8 +13,10 @@ class Customer : User{
         email: String,
         password: String,
         reg_date: String,
-        age: Int
-        ) : super(uid,name,surname,email,password,reg_date,age){
+        age: Int,
+        priority: Int
+        ): super(uid,name,surname,email,password,reg_date,age) {
+        this.priority=priority
 
     }
 
@@ -26,7 +28,6 @@ class Customer : User{
         password = ""// TODO: make this type "Date" class.
         reg_date = ""
         age = 0
-
     }
 
     constructor(id:String){ // DEBUG Purposes

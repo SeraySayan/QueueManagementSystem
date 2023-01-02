@@ -19,11 +19,18 @@ class EmployeeMenu : AppCompatActivity() {
         binding = ActivityEmployeeMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.button.setOnClickListener {
+            intent = Intent(this, TestQueue::class.java)
+            startActivity(intent)
+
+        }
+
         binding.button2.setOnClickListener {
             intent = Intent(this, SettingPage::class.java)
             startActivity(intent)
 
         }
+
 
     }
 }
