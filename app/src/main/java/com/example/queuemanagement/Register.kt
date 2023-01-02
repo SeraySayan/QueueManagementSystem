@@ -83,96 +83,92 @@ class Register : AppCompatActivity() {
         val password = binding.password.text.toString()
         val repassword = binding.rePasswaord.text.toString()
         val birthday = binding.birthday.text.toString()
-        val age = 20
 
-        /*val dateFormat = SimpleDateFormat("yyyy")
-
-        val date = dateFormat.format(birthday)
-        val birthYear = date.toInt()
-
-        val cDate  = Date()
-        val currentYear = dateFormat.format(cDate)
-        val current = currentYear.toInt()
-
-        var age = birthYear - current
-
-            Toast.makeText(this,age,Toast.LENGTH_SHORT).show()*/
+        val dateFormat = SimpleDateFormat("yyyy")
+        val date: Date = Date()
+        val currentYear = dateFormat.format(date).toInt()
+        val birthYear = birthday.split("/")[2].toInt()
+        val age = currentYear - birthYear
 
 
 
 
-        // If all fields are not empty
-        if (email.isNotEmpty()&& password.isNotEmpty()&&repassword.isNotEmpty()&&birthday.isNotEmpty()){
 
-            // If the password and confirm password fields match
-            if (password == repassword){
 
-                // Attempt to create a new user with the provided email and password
-                firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ it ->
 
-                    if(it.isSuccessful){
-                        // If the user is successfully created, store their information in the database
-                        if (email.split("@")[1] == "employee.com"){
+// If all fields are not empty
+if (email.isNotEmpty()&& password.isNotEmpty()&&repassword.isNotEmpty()&&birthday.isNotEmpty()){
 
-                            val employee = firebaseAuth.currentUser?.let { it1 -> Employee(it1.uid,name,surname,email,password,birthday,age) }
-                            if (employee != null) {
-                                database.addData("Employees",employee)
-                            }
+    // If the password and confirm password fields match
+    if (password == repassword){
 
-                        }
-                        else if(email.split("@")[1] != "employee.com"){
+        // Attempt to create a new user with the provided email and password
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ it ->
 
-                            val users = firebaseAuth.currentUser?.let { it1 -> Customer(it1.uid,name,surname,email,password,birthday,age) }
-                            if (users != null) {
-                                database.addData("Customers",users)
-                            }
+            if(it.isSuccessful){
 
-                        }
+                // If the user is successfully created, store their information in the database
+                if (email.split("@")[1] == "employee.com"){
 
-                        val intent = Intent (this,MainActivity::class.java)
-                        startActivity(intent)
+                    val employee = firebaseAuth.currentUser?.let { it1 -> Employee(it1.uid,name,surname,email,password,birthday,age) }
+                    if (employee != null) {
+                        database.addData("Employees",employee)
                     }
 
                 }
-                    .addOnFailureListener {
-                        when (it) {
-                            is FirebaseAuthUserCollisionException -> {
+                else if(email.split("@")[1] != "employee.com"){
 
-                                Toast.makeText(this,"Email address is already in use!",Toast.LENGTH_SHORT).show()
-
-                            }
-                            is FirebaseAuthWeakPasswordException -> {
-                                Toast.makeText(this,"Password is not strong!",Toast.LENGTH_SHORT).show()
-
-                            }
-                            is FirebaseAuthInvalidCredentialsException -> {
-
-                                Toast.makeText(this,"Email address is not available format!",Toast.LENGTH_SHORT).show()
-
-                            }
-                            else -> {
-                                Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
-
-                            }
-                        }
+                    val users = firebaseAuth.currentUser?.let { it1 -> Customer(it1.uid,name,surname,email,password,birthday,age) }
+                    if (users != null) {
+                        database.addData("Customers",users)
                     }
 
+                }
 
-
-
+                val intent = Intent (this,MainActivity::class.java)
+                startActivity(intent)
             }
-            else {
-                Toast.makeText(this,"Password is not matching!",Toast.LENGTH_SHORT).show()
-
-            }
-        }
-
-        else {
-            Toast.makeText(this,"Empty Fields is not Allowed!",Toast.LENGTH_SHORT).show()
 
         }
+            .addOnFailureListener {
+                when (it) {
+                    is FirebaseAuthUserCollisionException -> {
+
+                        Toast.makeText(this,"Email address is already in use!",Toast.LENGTH_SHORT).show()
+
+                    }
+                    is FirebaseAuthWeakPasswordException -> {
+                        Toast.makeText(this,"Password is not strong!",Toast.LENGTH_SHORT).show()
+
+                    }
+                    is FirebaseAuthInvalidCredentialsException -> {
+
+                        Toast.makeText(this,"Email address is not available format!",Toast.LENGTH_SHORT).show()
+
+                    }
+                    else -> {
+                        Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
+
+
+
 
     }
+    else {
+        Toast.makeText(this,"Password is not matching!",Toast.LENGTH_SHORT).show()
+
+    }
+}
+
+else {
+    Toast.makeText(this,"Empty Fields is not Allowed!",Toast.LENGTH_SHORT).show()
+
+}
+
+}
 
 
 }
