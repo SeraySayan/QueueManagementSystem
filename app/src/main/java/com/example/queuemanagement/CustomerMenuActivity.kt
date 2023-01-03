@@ -39,7 +39,7 @@ class CustomerMenuActivity : AppCompatActivity() {
 
         // TEMP BUTTONS FOR DEBUG !!!
         binding.button5.setOnClickListener(){
-            intent = Intent(this, CustomerActiveQueue::class.java)
+            intent = Intent(this, AdminMenu::class.java)
             startActivity(intent)
         }
         binding.button6.setOnClickListener(){
