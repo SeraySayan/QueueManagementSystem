@@ -1,6 +1,7 @@
 package com.example.queuemanagement
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -32,10 +33,29 @@ class EmployeeDetails : AppCompatActivity() {
 
         binding.button1.setOnClickListener{
            //change branch
+            /*var userDoc = database.getDocumentByField("Employee","uid",emp_uid){ data ->
+                data?.reference?.update(
+                hashMapOf(
+                    "branch" to newBranch
+                ) as Map<String, Any>
+                )
+            }*/
+            /*intent.putExtra("uid",emp_uid)
+            intent = Intent(this, ChangeBranch::class.java)
+            startActivity(intent)*/
         }
 
-        binding.button2.setOnClickListener{
+        binding.button2.setOnClickListener{//deletes employee from Employees collection but not from fireauth
             //delete employee
+            var userDoc = database.getDocumentByField("Employees","uid",emp_uid){ data ->
+                data?.reference?.delete()
+            }
+            Toast.makeText(
+                this@EmployeeDetails, "Deleted",
+                Toast.LENGTH_SHORT
+            ).show()
+            intent = Intent(this, AdminMenu::class.java)
+            startActivity(intent)
         }
 
 

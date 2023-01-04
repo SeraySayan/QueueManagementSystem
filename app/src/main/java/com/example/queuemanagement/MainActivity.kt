@@ -64,6 +64,12 @@ class MainActivity : AppCompatActivity() {
                             intent = Intent(this, EmployeeMenu::class.java)
                             startActivity(intent)
                         }*/
+                        else if((email.split("@"))[1] == "admin.com"){
+                            intent = Intent(this, AdminMenu::class.java)
+                            intent.putExtra("uid", firebaseAuth.uid)
+                            startActivity(intent)
+                        }
+
                         else{
                             intent = Intent(this, CustomerMenuActivity::class.java)
                             intent.putExtra("uid", firebaseAuth.uid)

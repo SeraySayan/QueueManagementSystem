@@ -24,7 +24,6 @@ class CustomerActiveQueue : AppCompatActivity() {
         var uid = intent.getStringExtra("uid").toString()
         var selected_queue = intent.getStringExtra("queue").toString()
         var priority = intent.getIntExtra("priority",1)
-        //var priority=2
         //it only takes the ones whose priorities are bigger or equal to the this ticket and wait_times
 
         database.listenToChanges(selected_queue) { querySnapshot ->

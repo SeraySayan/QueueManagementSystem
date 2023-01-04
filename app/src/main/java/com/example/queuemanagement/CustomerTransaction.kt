@@ -33,8 +33,8 @@ class CustomerTransaction : AppCompatActivity() {
 
 
         // Getting selected queue and user uid from previous activity
-        var selected_queue = intent.getStringExtra("queue_location").toString()
-        var user_uid = intent.getStringExtra("uid").toString()
+        val selected_queue = intent.getStringExtra("queue_location").toString()
+        val user_uid = intent.getStringExtra("uid").toString()
         var priority=1//initialization of priority
         // TODO:ilk bunu alıp yanlış değerleri gösteriyor, gir çık yapınca doğru değerleri gösteriyor,düzelt
         //taking the priority from database
@@ -43,8 +43,9 @@ class CustomerTransaction : AppCompatActivity() {
         }
 
         database.listenToChanges(selected_queue){querySnapshot ->
+
             database.getTransactionQueue(selected_queue, priority){ queueSize, wait_times->
-                var queue_size =  queueSize.size  // getting the queue size
+                val queue_size =  queueSize.size  // getting the queue size
                 binding.peopleCount.setText("There are $queue_size customers in the line")
 
                 var est_wait_time = 0
