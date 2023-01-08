@@ -53,17 +53,6 @@ class MainActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
 
-                        /*val document = db.document(firebaseAuth.currentUser?.uid.toString())
-                        if(document.parent.equals("Customers")){
-                            intent = Intent(this, CustomerMenuActivity::class.java)
-                            startActivity(intent)
-
-                        }
-                        else if (document.parent.equals("Employees")){
-
-                            intent = Intent(this, EmployeeMenu::class.java)
-                            startActivity(intent)
-                        }*/
                         else{
                             intent = Intent(this, CustomerMenuActivity::class.java)
                             intent.putExtra("uid", firebaseAuth.uid)
