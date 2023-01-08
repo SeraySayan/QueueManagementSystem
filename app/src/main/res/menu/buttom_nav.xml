@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="5"
+        android:id="@+id/button5"
+        android:icon="@drawable/logo"/>
+    <item android:title="6"
+        android:id="@+id/button6"
+        android:icon="@drawable/logo"/>
+    <item android:title="Queue"
+        android:id="@+id/button1"
+        android:icon="@drawable/logo"/>
+    <item android:title="Map"
+        android:id="@+id/button3"
+        android:icon="@drawable/logo"/>
+    <item android:title="Setting"
+        android:id="@+id/button4"
+        android:icon="@drawable/logo"/>
+</menu>
