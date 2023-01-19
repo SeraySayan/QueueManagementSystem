@@ -4,6 +4,7 @@ import ClassFiles.Ticket
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.queuemanagement.databinding.ActivityEmployeeQueueBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,16 +14,23 @@ class EmployeeQueue : AppCompatActivity() {
     private lateinit var queueList:ArrayList<Ticket>
     val database = FirestoreDB()
 
-    private var db= FirebaseFirestore.getInstance() // TODO: implement custom class
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmployeeQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        db= FirebaseFirestore.getInstance()
+
 
 ////
         val eQueue="/Queue/queue1/TicketsInQueue"
+        binding.button1.setOnClickListener {
+            database.dequeue(eQueue)
+            Toast.makeText(this, "Process completed!", Toast.LENGTH_SHORT).show()
+        }
+        binding.button2.setOnClickListener {
+            database.dequeue(eQueue)
+            Toast.makeText(this, "Process cancelled!", Toast.LENGTH_SHORT).show()
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         //queueList = arrayListOf()
         //TODO: databaseden hangi queue olduğunu çek
@@ -48,6 +56,7 @@ class EmployeeQueue : AppCompatActivity() {
 
             }
         }
+
        // database.dequeue(eQueue)
 
        /* db.collection("/Queue/queue1/TicketsInQueue").get()
