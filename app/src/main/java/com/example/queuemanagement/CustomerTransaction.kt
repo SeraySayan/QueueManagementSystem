@@ -43,13 +43,13 @@ class CustomerTransaction : AppCompatActivity() {
             database.getQueueTEST(selected_queue) { tickets ->
 
                 var queue_size =  tickets.size  // getting the queue size
-                binding.peopleCount.setText("There are $queue_size customers in the line")
+                binding.peopleCount.setText("$queue_size customers")
 
                 var est_wait_time = 0
                 for (ticket in tickets){
                     est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
                 }
-                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time")
+                binding.remainingTime.setText("$est_wait_time minutes")
 
             }
         }

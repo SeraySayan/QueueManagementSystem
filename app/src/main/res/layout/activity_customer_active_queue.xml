@@ -1,123 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
+    android:orientation="vertical"
+    android:paddingVertical="170dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/loginbkg"
-
-    android:orientation="vertical"
     tools:context=".CustomerActiveQueue">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        android:layout_marginVertical="40dp"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="254dp"
-        app:cardBackgroundColor="@color/purple_500"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="89dp"
-                android:layout_height="33dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="5dp"
-                android:text="min"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="top"
+                android:src="@drawable/timelogo"></ImageView>
 
             <TextView
                 android:id="@+id/estRemaining"
-                android:layout_width="109dp"
-                android:layout_height="54dp"
-                android:layout_marginStart="19dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="19dp"
-                android:text="remaining time"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="254dp"
-        android:layout_marginEnd="40dp"
-        app:cardBackgroundColor="@color/purple_500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remaining Time"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/textView10"
-                android:layout_width="89dp"
-                android:layout_height="33dp"
-                android:layout_marginStart="31dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="5dp"
-                android:text="position"
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="minutes"
+                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ticketlogo"></ImageView>
 
             <TextView
                 android:id="@+id/queueNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="19dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="19dp"
-                android:text="your number"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="Your Ticket Number"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="position"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-    </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/LeaveQueueButton"
-        android:layout_width="340dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="156dp"
-        android:background="#FF5555"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#339933"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
         android:text="Leave Queue"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="18sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>

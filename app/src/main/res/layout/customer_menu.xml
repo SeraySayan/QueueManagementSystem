@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="bottom"
     tools:context=".CustomerMenuActivity"
-    android:background="@drawable/loginbkg">
+   >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,65 +46,111 @@
 
     </RelativeLayout>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp"
-        android:id="@+id/menuvisible">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/menuvisible"
+        >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:background="@drawable/custom_edit_text">
-
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
             <fragment
                 android:id="@+id/myMap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 />
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:gravity="bottom"
+            android:background="@color/background">
+        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:id="@+id/branchListVisible">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:contextClickable="true"
+                    android:scrollbars="vertical"
 
-    >
+                    tools:listitem="@layout/list_item" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button5" />
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            android:background="@color/background"
+            >
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button6" />
+            <Button
+                android:id="@+id/button5"
+                android:backgroundTint="@color/background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:layout_margin="0dp"
+                android:text="5"
+                android:textSize="10sp"/>
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QUEUE" />
+            <Button
+                android:id="@+id/button6"
+                android:backgroundTint="@color/background"
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SETTINGS" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="6"
+                android:padding="0dp"
+                android:layout_margin="0dp"
+                android:textSize="10sp"/>
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="0dp"
+                android:backgroundTint="@color/background"
+
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Branch"
+                android:textSize="10sp"/>
+
+            <Button
+                android:id="@+id/button2"
+                android:backgroundTint="@color/background"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SETTING"
+                android:textSize="10sp"/>
 
 
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
 
 

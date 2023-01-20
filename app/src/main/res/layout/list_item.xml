@@ -14,15 +14,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="Branch Name: "
-            android:textColor="@color/teal_700"
-            android:textSize="23sp" />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/branclogoid"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="3dp"
+                android:src="@drawable/bankbranchlogo"></ImageView>
 
+            <TextView
+
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginStart="50dp"
+                android:textColor="@color/teal_700"
+                android:textSize="23sp" />
+
+
+        </RelativeLayout>
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -49,6 +62,9 @@
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SEE DETAILS" />
+            android:text="SEE DETAILS"
+            android:backgroundTint="@color/teal_700"/>
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,75 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-
+    android:gravity="bottom"
     tools:context=".CustomerTransaction"
-    android:padding="20dp"
     android:background="@drawable/loginbkg">
 
-
-
     <LinearLayout
-        android:layout_width="363dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="300dp"
-        android:padding="24dp">
+        android:layout_marginBottom="150dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp"
+            >
 
-        <TextView
-            android:id="@+id/peopleCount"
-            android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please select transaction type:"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="18sp"
+                android:background="#7777DD"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Count of the people in the queue"
-            android:textColor="@color/black"
-            android:layout_marginBottom="20dp"
-            android:textSize="18sp"/>
-        <TextView
-            android:id="@+id/remainingTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Estimated remaining time"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="0dp"
+            android:layout_marginBottom="20dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/icon"></ImageView>
+
+                <TextView
+                    android:id="@+id/peopleCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/timelogo"></ImageView>
+
+                <TextView
+                    android:id="@+id/remainingTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/EnterButton"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
             android:background="#339933"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="30dp"
             android:text="Enter Queue"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:background="@color/background"
+        >
+
+        <Button
+            android:id="@+id/button5"
+            android:backgroundTint="@color/background"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:text="5"
+            android:textSize="10sp"/>
+
+        <Button
+            android:id="@+id/button6"
+            android:backgroundTint="@color/background"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="6"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:textSize="10sp"/>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="0dp"
+            android:backgroundTint="@color/background"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Branch"
+            android:textSize="10sp"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:backgroundTint="@color/background"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SETTING"
+            android:textSize="10sp"/>
+
+
+
+
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="Please select transaction type:"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        />
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="200dp"
-        android:textSize="18sp"
-        android:background="#7777DD"/>
 
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>
