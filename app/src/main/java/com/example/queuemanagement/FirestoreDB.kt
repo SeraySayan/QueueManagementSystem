@@ -128,6 +128,10 @@ class FirestoreDB  {
             .addOnFailureListener { exception ->
                 Log.d("getQueue", "Error getting documents: ", exception)
             }
+
+
+
+
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -188,7 +192,11 @@ class FirestoreDB  {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
                     var myticket = Ticket(document.data["id"].toString().toInt(),
-                        document.data["priority"].toString().toInt(), document.data["processType"].toString(),document.data["customer_id"].toString() )
+                                          document.data["priority"].toString().toInt(),
+                                          document.data["processType"].toString(),
+                                          document.data["customer_id"].toString(),
+                                          document.data["name"].toString(),
+                                          document.data["surname"].toString())
                     dataList.add(myticket)
                 }
                 callback(dataList)

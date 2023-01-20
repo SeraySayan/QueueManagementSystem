@@ -13,6 +13,8 @@ class Ticket {
     var total_waited_time = 0
     var served_employee =""
     var customer_id = ""
+    var name = ""
+    var surname = ""
 
     // Constructor for creation from customer
     constructor(id:Int, priority:Int,  processType:String, customer_id:String ){
@@ -22,6 +24,19 @@ class Ticket {
         this.customer_id = customer_id
         this.date_time = FieldValue.serverTimestamp()
         this.status = true // new created tickets will be active
+
+    }
+
+    // Constructor with name and surname
+    constructor(id:Int, priority:Int,  processType:String, customer_id:String, name:String, surname:String){
+        this.id = id
+        this.priority = priority
+        this.processType = processType
+        this.customer_id = customer_id
+        this.date_time = FieldValue.serverTimestamp()
+        this.status = true // new created tickets will be active
+        this.name = name
+        this.surname = surname
 
     }
 

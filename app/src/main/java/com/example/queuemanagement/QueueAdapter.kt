@@ -16,7 +16,6 @@ class QueueAdapter(private val queueList: MutableList<Ticket>, //val user_uid:St
         val tvName: TextView = itemView.findViewById(R.id.textView1)
         val tvSurname: TextView = itemView.findViewById(R.id.textView2)
         val tvpType: TextView =itemView.findViewById(R.id.textView3)
-        val tvEstTime: TextView =itemView.findViewById(R.id.textView4)
 
         override fun onClick(v: View?) {
             TODO("Not yet implemented")
@@ -30,10 +29,9 @@ class QueueAdapter(private val queueList: MutableList<Ticket>, //val user_uid:St
 //TODO:name surname çek
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: QueueViewHolder, position: Int) {
-        holder.tvName.text = "Name: ${queueList[position].customer_id}"
-        holder.tvSurname.text = "Surname: ${queueList[position].customer_id}"
+        holder.tvName.text = "Name: ${queueList[position].name}"
+        holder.tvSurname.text = "Surname: ${queueList[position].surname}"
         holder.tvpType.text = "Process Type: ${queueList[position].processType}"
-        holder.tvEstTime.text = "Total Waiting Time: ${queueList[position].total_waited_time}"
 
     }
 

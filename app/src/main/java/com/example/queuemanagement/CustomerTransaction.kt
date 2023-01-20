@@ -113,14 +113,16 @@ class CustomerTransaction : AppCompatActivity() {
 
             var userDoc = database.getDocumentByField("Customers","uid",user_uid){ data ->
 
-                var pri =  data?.get("priority").toString().toInt()
+                var priority =  data?.get("priority").toString().toInt()
+                var name = data?.get("name").toString()
+                var surname = data?.get("surname").toString()
 
-                database.addData(selected_queue,Ticket(0,pri,processType,user_uid))
+                database.addData(selected_queue,Ticket(0,priority,processType,user_uid, name, surname))
 
                 intent = Intent(this, CustomerActiveQueue::class.java)
                 intent.putExtra("queue",selected_queue)
                 intent.putExtra("uid", user_uid)
-                intent.putExtra("priority",pri)//sending to the active queue
+                intent.putExtra("priority",priority)//sending to the active queue
                 startActivity(intent)
 
             }

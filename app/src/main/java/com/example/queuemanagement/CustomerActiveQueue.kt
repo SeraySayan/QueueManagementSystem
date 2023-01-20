@@ -3,6 +3,7 @@ package com.example.queuemanagement
 import ClassFiles.*
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.queuemanagement.databinding.ActivityCustomerActiveQueueBinding
 import com.google.firebase.*
@@ -27,7 +28,8 @@ class CustomerActiveQueue : AppCompatActivity() {
         //it only takes the ones whose priorities are bigger or equal to the this ticket and wait_times
 
         database.listenToChanges(selected_queue) { querySnapshot ->
-            database.getQueueActive2(selected_queue, uid, priority) { tickets, wait_times ->
+
+            database.getQueueActive(selected_queue, uid) { tickets, wait_times ->
 
                 binding.queueNum.setText(tickets[0].toString())
 
@@ -35,10 +37,12 @@ class CustomerActiveQueue : AppCompatActivity() {
                 for (x in wait_times) {
                     total_time += x
                 }
-
                 binding.estRemaining.setText(total_time.toString())
 
+
             }
+
+
 
         }
         //TODO: Implement LeaveQueue

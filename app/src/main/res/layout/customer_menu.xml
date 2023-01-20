@@ -45,14 +45,19 @@
         android:text="Button6" />
 
     <Button
+        android:id="@+id/button3"
+        android:layout_width="188dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="193dp"
+        android:text="VIEW MAP" />
+
+    <Button
         android:id="@+id/button1"
         android:layout_width="188dp"
         android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="312dp"
-        android:layout_marginEnd="102dp"
         android:text="JOIN QUEUE" />
 
     <Button
@@ -60,23 +65,10 @@
         android:layout_width="188dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="433dp"
-        android:layout_marginEnd="101dp"
         android:text="SETTINGS" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="188dp"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="194dp"
-        android:insetTop="10dp"
-        android:text="VIEW MAP" />
 
     <LinearLayout
         android:layout_width="match_parent"

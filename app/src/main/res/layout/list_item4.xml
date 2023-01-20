@@ -42,14 +42,6 @@
             android:text="Process Type: "
             android:textSize="17sp" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="Total Waiting Time: "
-            android:textSize="17sp" />
-
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
