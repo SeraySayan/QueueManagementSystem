@@ -29,7 +29,7 @@ class CustomerActiveQueue : AppCompatActivity() {
 
         database.listenToChanges(selected_queue) { querySnapshot ->
 
-            database.getQueueActive(selected_queue, uid) { tickets, wait_times ->
+            database.getQueueActive2(selected_queue, uid, priority) { tickets, wait_times ->
 
                 binding.queueNum.setText(tickets[0].toString())
 
