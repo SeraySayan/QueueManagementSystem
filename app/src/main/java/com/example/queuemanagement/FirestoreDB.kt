@@ -148,6 +148,7 @@ class FirestoreDB  {
                     if(document.data["priority"].toString().toInt() >= priority){
                         if(document.data["customer_id"].toString().equals(uid)){
                             CurrentIndex[0] = (result.indexOf(document)+1)
+                            break
                         }
                         else{
                             WaitingTime.add(map[document.get("processType")]!!)
@@ -273,12 +274,6 @@ class FirestoreDB  {
                 }
             }
     }
-
-    // TEST
-    fun getDocumentId(documentReference: DocumentReference): String {
-        return documentReference.id
-    }
-
 
 }
 
