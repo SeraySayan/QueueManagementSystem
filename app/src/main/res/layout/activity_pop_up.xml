@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popup_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PopUp">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/popup_view_with_border"
+        android:layout_width="281dp"
+        android:layout_height="258dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/popup_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="2dp"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="20dp"
+                app:cardMaxElevation="25dp"
+                app:cardPreventCornerOverlap="false">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/popup_background_container"
+                    android:layout_width="281dp"
+                    android:layout_height="279dp"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent"
+                    android:minHeight="170dp">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/popup_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/round_back"
+                        android:gravity="center"
+                        android:text="Alert Information"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        app:autoSizeMaxTextSize="24dp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/popup_text"
+                        android:layout_width="281dp"
+                        android:layout_height="131dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="30dp"
+                        android:text="Do you want to log out?"
+                        android:textAlignment="inherit"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.272"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/popup_title"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <Button
+                        android:id="@+id/accept_button"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="130dp"
+                        android:layout_height="45dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginBottom="68dp"
+                        android:background="@drawable/round_back"
+                        android:text="Accept"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/cancel_button"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/cancel_button"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="130dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginBottom="68dp"
+                        android:background="@drawable/round_back"
+                        android:text="Cancel"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.894"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

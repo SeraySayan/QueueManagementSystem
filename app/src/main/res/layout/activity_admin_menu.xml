@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/loginbkg"
     android:layout_height="match_parent"
-    tools:context=".EmployeeMenu"
+    tools:context=".AdminMenu"
     tools:ignore="HardcodedText">
 
 
@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="120dp"
         android:layout_marginTop="203dp"
-        android:text="MANAGE QUEUE" />
+        android:text="Customer List" />
 
     <Button
         android:id="@+id/button2"
@@ -28,5 +28,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="119dp"
         android:layout_marginTop="305dp"
-        android:text="SETTINGS" />
+        android:text="Employee List" />
 </RelativeLayout>

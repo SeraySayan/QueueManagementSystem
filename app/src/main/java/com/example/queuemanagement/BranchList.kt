@@ -37,9 +37,9 @@ class BranchList : AppCompatActivity() {
         branchList = arrayListOf()
 
         db.collection("Branches").get()
-            .addOnSuccessListener {
-                if(!it.isEmpty){
-                    for (data in it.documents){
+                        .addOnSuccessListener {
+                            if(!it.isEmpty){
+                                for (data in it.documents){
                         val branch:Branchs? =data.toObject<Branchs>(Branchs::class.java)
                         branchList.add(branch!!)
                     }

@@ -34,7 +34,7 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>, val user_uid:Stri
     override fun onBindViewHolder(holder: BranchViewHolder, position: Int) {
         holder.tvName.text = branchlist[position].name
         holder.tvLocation.text = branchlist[position].location.toString()
-        holder.tvQueueList.text ="Waiting Customers "+branchlist[position].Queue
+        holder.tvQueueList.text ="Waiting Customers:  "     // TODO: FIX HERE
         holder.tvButton.setOnClickListener {
             Log.d("ItemClick", "Item at position $position clicked")
             val intent = Intent(context, CustomerTransaction::class.java )

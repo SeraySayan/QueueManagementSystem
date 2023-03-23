@@ -3,34 +3,27 @@ package com.example.queuemanagement
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.queuemanagement.databinding.ActivityEmployeeMenuBinding
-import com.example.queuemanagement.databinding.ActivityMainBinding
+import com.example.queuemanagement.databinding.ActivityAdminMenuBinding
 
 
-// TODO : binding ekle
-
-
-class EmployeeMenu : AppCompatActivity() {
-
-    lateinit var binding: ActivityEmployeeMenuBinding
-
+class AdminMenu : AppCompatActivity() {
+    lateinit var binding: ActivityAdminMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEmployeeMenuBinding.inflate(layoutInflater)
+        binding = ActivityAdminMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.button.setOnClickListener {
-            intent = Intent(this, EmployeeQueue::class.java)
+            intent = Intent(this, CustomerList::class.java)
             startActivity(intent)
 
         }
 
         binding.button2.setOnClickListener {
-            intent = Intent(this, SettingPage::class.java)
+            intent = Intent(this, EmployeeList::class.java)
             startActivity(intent)
 
         }
-
-
     }
 }

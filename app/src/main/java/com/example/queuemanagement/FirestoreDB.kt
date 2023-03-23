@@ -1,6 +1,7 @@
 package com.example.queuemanagement
 
 import ClassFiles.Ticket
+import android.annotation.SuppressLint
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,7 +51,7 @@ class FirestoreDB  {
     // document and return its Document Snapshot.
     fun getDocumentByField(collectionName: String, fieldName: String, fieldValue: String?, callback: (DocumentSnapshot?) -> Unit) {
         val query = db.collection(collectionName).whereEqualTo(fieldName, fieldValue)
-        val task = query.get()
+        val task= query.get()
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
                     callback(documents.first())
@@ -64,6 +65,7 @@ class FirestoreDB  {
                 Log.d("getDocumentSnapshot", "FAILED", exception)
                 callback(null)
             }
+
     }
 
     /*fun getInfo(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
@@ -102,6 +104,7 @@ class FirestoreDB  {
             }
     }
 
+
     fun getQueueActive(collection: String, uid : String , callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
 
         val CurrentIndex = mutableListOf<Int>()
@@ -125,10 +128,61 @@ class FirestoreDB  {
             .addOnFailureListener { exception ->
                 Log.d("getQueue", "Error getting documents: ", exception)
             }
+
+
+
+
     }
 
+    @SuppressLint("SuspiciousIndentation")
+    fun getQueueActive2(collection: String, uid : String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
+//according to priority,correct time calculation for active queue page
+        val CurrentIndex = mutableListOf<Int>()
+        var WaitingTime = mutableListOf<Int>()
+        CurrentIndex.add(0)
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
+            .get()
+            .addOnSuccessListener { result ->
 
+                for (document in result) {
+                    if(document.data["priority"].toString().toInt() >= priority){
+                        if(document.data["customer_id"].toString().equals(uid)){
+                            CurrentIndex[0] = (result.indexOf(document)+1)
+                            break
+                        }
+                        else{
+                            WaitingTime.add(map[document.get("processType")]!!)
+                        }
+                    }
 
+                }
+                callback(CurrentIndex, WaitingTime) // BURALARDA BİŞEY VAR
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getQueue", "Error getting documents: ", exception)
+            }
+    }
+    fun getTransactionQueue(collection: String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
+//according to priority, time and size calculation to show in transaction page
+        var WaitingTime = mutableListOf<Int>()
+        var queueSize= mutableListOf<Int>()
+        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
+            .get()
+            .addOnSuccessListener { result ->
+
+                for (document in result) {
+                    if(document.data["priority"].toString().toInt() >= priority){
+                            WaitingTime.add(map[document.get("processType")]!!)
+                            queueSize.add(1)
+                    }
+
+                }
+                callback(queueSize, WaitingTime)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getQueue", "Error getting documents: ", exception)
+            }
+    }
     // An alternative version, for callback "Ticket" objects.
     fun getQueueTEST(collection: String, callback: (MutableList<Ticket>) -> Unit) {
         val dataList = mutableListOf<Ticket>()
@@ -138,7 +192,12 @@ class FirestoreDB  {
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    var myticket = Ticket(document.data["id"].toString().toInt(), document.data["priority"].toString().toInt(), document.data["processType"].toString(),"customer_id" )
+                    var myticket = Ticket(document.data["id"].toString().toInt(),
+                                          document.data["priority"].toString().toInt(),
+                                          document.data["processType"].toString(),
+                                          document.data["customer_id"].toString(),
+                                          document.data["name"].toString(),
+                                          document.data["surname"].toString())
                     dataList.add(myticket)
                 }
                 callback(dataList)
@@ -214,11 +273,6 @@ class FirestoreDB  {
                     Log.d("listenToChanges", "Current data: null")
                 }
             }
-    }
-
-    // TEST
-    fun getDocumentId(documentReference: DocumentReference): String {
-        return documentReference.id
     }
 
 }

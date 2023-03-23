@@ -5,7 +5,6 @@ import ClassFiles.Customer
 import ClassFiles.Employee
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
-
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +14,8 @@ import androidx.annotation.RequiresApi
 import com.example.queuemanagement.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.*
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 // This activity is responsible for handling the user's registration process.
 
@@ -83,7 +84,14 @@ class Register : AppCompatActivity() {
         val password = binding.password.text.toString()
         val repassword = binding.rePasswaord.text.toString()
         val birthday = binding.birthday.text.toString()
-        val age = 20
+
+        val localDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        val current = LocalDateTime.now()
+        val age =  current.year - localDate.year
+        var priority=1
+        if(age>=65){
+            priority= 2
+        }
 
         /*val dateFormat = SimpleDateFormat("yyyy")
 
@@ -122,7 +130,7 @@ class Register : AppCompatActivity() {
                         }
                         else if(email.split("@")[1] != "employee.com"){
 
-                            val users = firebaseAuth.currentUser?.let { it1 -> Customer(it1.uid,name,surname,email,password,birthday,age) }
+                            val users = firebaseAuth.currentUser?.let { it1 -> Customer(it1.uid,name,surname,email,password,birthday,age,priority) }
                             if (users != null) {
                                 database.addData("Customers",users)
                             }
