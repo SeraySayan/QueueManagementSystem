@@ -68,71 +68,6 @@ class FirestoreDB  {
 
     }
 
-    /*fun getInfo(collection: String,lookFor: String, callback: (MutableList<Any>) -> Unit) {
-        val dataList = mutableListOf<Any>()
-        db.collection(collection).whereEqualTo("customer_id",lookFor)
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val data = document.data
-                    dataList.add(data)
-                }
-                callback(dataList)
-            }
-            .addOnFailureListener { exception ->
-                Log.d("getData", "Error getting documents: ", exception)
-            }
-    }*/
-
-    // getting Queue function. Similar to getData(), but this method has
-    // the queue query for firestore Index.
-    fun getQueue(collection: String, callback: (MutableList<Any>) -> Unit) {
-        val dataList = mutableListOf<Any>()
-        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-
-                    // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    val data = " " + document.data["id"].toString() + " " +  document.data["processType"].toString()+ " " + document.data["priority"].toString() + " " + result.indexOf(document) + "\n"
-                    dataList.add(data)
-                }
-                callback(dataList)
-            }
-            .addOnFailureListener { exception ->
-                Log.d("getQueue", "Error getting documents: ", exception)
-            }
-    }
-
-
-    fun getQueueActive(collection: String, uid : String , callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
-
-        val CurrentIndex = mutableListOf<Int>()
-        var WaitingTime = mutableListOf<Int>()
-        CurrentIndex.add(0)
-        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-
-                    if(document.data["customer_id"].toString().equals(uid)){
-                        CurrentIndex[0] = (result.indexOf(document)+1)
-                    }
-                    else{
-                        WaitingTime.add(map[document.get("processType")]!!)
-                    }
-
-                }
-                callback(CurrentIndex, WaitingTime) // BURALARDA BİŞEY VAR
-            }
-            .addOnFailureListener { exception ->
-                Log.d("getQueue", "Error getting documents: ", exception)
-            }
-
-
-
-
-    }
 
     @SuppressLint("SuspiciousIndentation")
     fun getQueueActive2(collection: String, uid : String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
@@ -162,8 +97,9 @@ class FirestoreDB  {
                 Log.d("getQueue", "Error getting documents: ", exception)
             }
     }
+
     fun getTransactionQueue(collection: String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
-//according to priority, time and size calculation to show in transaction page
+        //according to priority, time and size calculation to show in transaction page
         var WaitingTime = mutableListOf<Int>()
         var queueSize= mutableListOf<Int>()
         db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
@@ -210,7 +146,6 @@ class FirestoreDB  {
     // This method reaches the qeueue Index and delete the
     // first item. NOTE: WILL CHANGE TO NOT DELETE!
     // Instead, we need to move that ticket document to another collection "Tickets"
-    // TODO: 2 Different dequeue must be exist. One for customer, one for employee
     // Also I gotta do some more process such as adding details to tickets
     fun dequeue(collection: String) {
 
@@ -219,7 +154,8 @@ class FirestoreDB  {
             .orderBy("date_time").limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    document.reference.delete() // TODO: DO NOT DELETE ANYTHING!
+                    saveTicket(document.reference)  // Copies the ticket data to "Tickets" collection
+                    document.reference.delete()     // Deletes the real ticket from the queue
                 }
             }
             .addOnFailureListener { exception ->
@@ -230,12 +166,12 @@ class FirestoreDB  {
 
     // Same as dequeue, but instead of indexed query, it directly
     // searches for input ticket_id and deletes that ticket
-    // TODO: TEST THIS FUCNTION
     fun leaveQueue(collection: String, uid : String){
         db.collection(collection).whereEqualTo("customer_id",uid).limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    document.reference.delete() // TODO: DO NOT DELETE ANYTHING!
+                    saveTicket(document.data)       // Copies the ticket data to "Tickets" collection
+                    document.reference.delete()     // Deletes the real ticket from the queue
                 }
             }
             .addOnFailureListener { exception ->
@@ -244,7 +180,10 @@ class FirestoreDB  {
     }
 
 
-
+    // Takes the Data and saves it to the Tickets collection
+    fun saveTicket(ticket: Any){
+        addData("Tickets", ticket)
+    }
 
     // Method for adding data to Firestore. Can handle any type of data / object
     fun addData(collection: String, data: Any) {
