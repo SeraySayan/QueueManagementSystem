@@ -117,7 +117,13 @@ class CustomerTransaction : AppCompatActivity() {
                 var name = data?.get("name").toString()
                 var surname = data?.get("surname").toString()
 
-                database.addData(selected_queue,Ticket(0,priority,processType,user_uid, name, surname))
+                database.addData(selected_queue,Ticket(
+                    priority,
+                    processType,
+                    user_uid,
+                    name,
+                    surname
+                ))
 
                 intent = Intent(this, CustomerActiveQueue::class.java)
                 intent.putExtra("queue",selected_queue)

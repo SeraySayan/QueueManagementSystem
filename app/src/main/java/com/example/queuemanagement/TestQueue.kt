@@ -7,12 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import com.example.queuemanagement.databinding.ActivityTestqueueBinding
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.QuerySnapshot
 
 class TestQueue : AppCompatActivity(){
 
@@ -74,7 +70,7 @@ class TestQueue : AppCompatActivity(){
                     myList = data
                     var tempList = mutableListOf<String>()
                     for (x in myList){
-                        tempList.add( x.id.toString() + " " + x.processType + " " + x.priority + "\n"   )
+                        tempList.add( "QQQ" + " " + x.processType + " " + x.priority + "\n"   )
                     }
                     binding.textView3.setText(tempList.toString())
                 }
@@ -90,7 +86,7 @@ class TestQueue : AppCompatActivity(){
                 var tempList = mutableListOf<String>()
 
                 for (x in myList){
-                    tempList.add( x.id.toString() + " " + x.processType + " " + x.priority + "\n"   )
+                    tempList.add( "QQQ" + " " + x.processType + " " + x.priority + "\n"   )
                 }
 
                 binding.textView3.setText(tempList.toString())
@@ -104,7 +100,7 @@ class TestQueue : AppCompatActivity(){
 
             val ticketNo = binding.editTextTicketno.text.toString().toInt()
             val priority = binding.editTextPriority.text.toString().toInt()
-            database.addData(selected_queue,Ticket(ticketNo,priority,processType,"1"))
+            database.addData(selected_queue,Ticket())
 
 
         }

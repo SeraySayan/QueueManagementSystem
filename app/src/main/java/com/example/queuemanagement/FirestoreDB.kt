@@ -3,10 +3,10 @@ package com.example.queuemanagement
 import ClassFiles.Ticket
 import android.annotation.SuppressLint
 import android.util.Log
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentSnapshot
 
 
 /**
@@ -71,7 +71,7 @@ class FirestoreDB  {
 
     @SuppressLint("SuspiciousIndentation")
     fun getQueueActive2(collection: String, uid : String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
-//according to priority,correct time calculation for active queue page
+    //according to priority,correct time calculation for active queue page
         val CurrentIndex = mutableListOf<Int>()
         var WaitingTime = mutableListOf<Int>()
         CurrentIndex.add(0)
@@ -91,7 +91,7 @@ class FirestoreDB  {
                     }
 
                 }
-                callback(CurrentIndex, WaitingTime) // BURALARDA BİŞEY VAR
+                callback(CurrentIndex, WaitingTime)
             }
             .addOnFailureListener { exception ->
                 Log.d("getQueue", "Error getting documents: ", exception)
@@ -128,12 +128,13 @@ class FirestoreDB  {
                 for (document in result) {
 
                     // This formatting is temp. //TODO: Implement a "documentToObject" method.
-                    var myticket = Ticket(document.data["id"].toString().toInt(),
-                                          document.data["priority"].toString().toInt(),
-                                          document.data["processType"].toString(),
-                                          document.data["customer_id"].toString(),
-                                          document.data["name"].toString(),
-                                          document.data["surname"].toString())
+                    var myticket = Ticket(
+                        document.data["priority"].toString().toInt(),
+                        document.data["processType"].toString(),
+                        document.data["customer_id"].toString(),
+                        document.data["name"].toString(),
+                        document.data["surname"].toString()
+                    )
                     dataList.add(myticket)
                 }
                 callback(dataList)
@@ -154,7 +155,7 @@ class FirestoreDB  {
             .orderBy("date_time").limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    saveTicket(document.reference)  // Copies the ticket data to "Tickets" collection
+                    saveTicket(document)  // Copies the ticket data to "Tickets" collection
                     document.reference.delete()     // Deletes the real ticket from the queue
                 }
             }
@@ -170,7 +171,7 @@ class FirestoreDB  {
         db.collection(collection).whereEqualTo("customer_id",uid).limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    saveTicket(document.data)       // Copies the ticket data to "Tickets" collection
+                    saveTicket(document)       // Copies the ticket data to "Tickets" collection
                     document.reference.delete()     // Deletes the real ticket from the queue
                 }
             }
@@ -181,8 +182,11 @@ class FirestoreDB  {
 
 
     // Takes the Data and saves it to the Tickets collection
-    fun saveTicket(ticket: Any){
-        addData("Tickets", ticket)
+    fun saveTicket(ticket: DocumentSnapshot){
+        var myticket = ticketFromFirestore(ticket)
+        myticket.updateExitTime()
+        myticket.calculateWaitTime()
+        addData("Tickets", myticket)
     }
 
     // Method for adding data to Firestore. Can handle any type of data / object
@@ -195,6 +199,20 @@ class FirestoreDB  {
             .addOnFailureListener { e ->
                 Log.w("addData", "Error adding document", e)
             }
+    }
+
+    fun ticketFromFirestore(doc: DocumentSnapshot): Ticket {
+        val ticket = Ticket()
+        ticket.priority = doc.getLong("priority")?.toInt() ?: 0
+        ticket.date_time = doc.getTimestamp("date_time")
+        //ticket.exitTime = doc.getTimestamp("exitTime")
+        //ticket.total_waited_time = doc.getTimestamp("total_waited_time")
+        ticket.processType = doc.getString("processType") ?: ""
+        ticket.served_employee = doc.getString("served_employee") ?: ""
+        ticket.customer_id = doc.getString("customer_id") ?: ""
+        ticket.name = doc.getString("name") ?: ""
+        ticket.surname = doc.getString("surname") ?: ""
+        return ticket
     }
 
     // Listener of this class. "How to use" in below.
