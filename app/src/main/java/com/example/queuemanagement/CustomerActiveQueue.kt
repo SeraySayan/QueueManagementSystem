@@ -43,8 +43,8 @@ class CustomerActiveQueue : AppCompatActivity() {
                 // If position = 0, that means this ticket is dequeued by employee
                 // So, Toast a message and finish activity
                 if(tickets[0].toString().toInt() == 0){
-                    //Toast.makeText(this, "Your Process has been finished", Toast.LENGTH_SHORT).show()
-                    finish()
+                    Toast.makeText(this, "Your Process has been finished", Toast.LENGTH_SHORT).show()
+                    //finish()
                 }
 
             }
