@@ -144,10 +144,31 @@ class FirestoreDB  {
             }
     }
 
-    // This method reaches the qeueue Index and delete the
-    // first item. NOTE: WILL CHANGE TO NOT DELETE!
-    // Instead, we need to move that ticket document to another collection "Tickets"
-    // Also I gotta do some more process such as adding details to tickets
+
+    // This function returns the Ticket on the top of the queue.
+    fun getNextCustomer(collection: String, callback: (MutableList<Ticket>) -> Unit){
+
+        var returnTicket = mutableListOf<Ticket>()
+
+        db.collection(collection)
+            .orderBy("priority",Query.Direction.DESCENDING)
+            .orderBy("date_time").limit(1).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    returnTicket.add(ticketFromFirestore(document))
+                }
+                callback(returnTicket)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("getNextCustomer", "Error ", exception)
+            }
+
+
+    }
+
+
+    // This method copies the first index of the input queue
+    // to "Tickets" collection. Then, deletes the ticket from the queue
     fun dequeue(collection: String) {
 
         db.collection(collection)
@@ -155,7 +176,6 @@ class FirestoreDB  {
             .orderBy("date_time").limit(1).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    saveTicket(document)  // Copies the ticket data to "Tickets" collection
                     document.reference.delete()     // Deletes the real ticket from the queue
                 }
             }
@@ -163,7 +183,6 @@ class FirestoreDB  {
                 Log.d("Dequeue", "Error ", exception)
             }
     }
-
 
     // Same as dequeue, but instead of indexed query, it directly
     // searches for input ticket_id and deletes that ticket
