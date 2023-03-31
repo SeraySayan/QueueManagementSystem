@@ -3,13 +3,11 @@ package com.example.queuemanagement
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import com.example.queuemanagement.databinding.CustomerMenuBinding
-import com.google.firebase.auth.FirebaseAuth
 
 
-class CustomerMenuActivity : AppCompatActivity() {
+class CustomerMenu : AppCompatActivity() {
 
     private lateinit var binding: CustomerMenuBinding
 
@@ -26,7 +24,7 @@ class CustomerMenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.button3.setOnClickListener {
-            Toast.makeText(this@CustomerMenuActivity, "MAP", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@CustomerMenu, "MAP", Toast.LENGTH_SHORT).show()
         }
         binding.button2.setOnClickListener {
             intent = Intent(this, SettingPage::class.java)

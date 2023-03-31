@@ -4,12 +4,10 @@ import ClassFiles.Ticket
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.queuemanagement.databinding.ActivityEmployeeQueueBinding
-import com.google.common.base.Stopwatch
-import com.google.firebase.firestore.FirebaseFirestore
+
 
 /**
  * 26.03.2023
@@ -37,18 +35,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 class EmployeeQueue : AppCompatActivity() {
-    lateinit var binding: ActivityEmployeeQueueBinding
-    private lateinit var queueList:ArrayList<Ticket>
-    val database = FirestoreDB()
-    var serving = 0
-    var servingTicket = Ticket()
+
+    lateinit var binding: ActivityEmployeeQueueBinding  // Binding for UI buttons
+    val database = FirestoreDB()                        // Database initialization
+    var serving = 0                                     // Serving status for the algorithm
+    lateinit var servingTicket: Ticket                  // Active Ticket object that is serving
+    var user_uid = ""                                   // Employee's uid for database query
 
 
-    fun resetOutput(){
-        binding.textView1.text = "Name: "
-        binding.textView2.text = "Surname: "
-        binding.textView3.text = "Process Type: "
-    }
 
 
     @SuppressLint("SetTextI18n")
@@ -56,6 +50,7 @@ class EmployeeQueue : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEmployeeQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        user_uid = intent.getStringExtra("uid").toString()
 
 
         val eQueue="/Queue/queue1/TicketsInQueue" //TODO: databaseden hangi queue olduğunu çek
@@ -92,14 +87,23 @@ class EmployeeQueue : AppCompatActivity() {
 
         // Dequeue buttons
         binding.button1.setOnClickListener {
+
+            if(serving==1){
+                resetOutput()
+                processTicket(servingTicket, 1)
+                Toast.makeText(this, "Process completed!", Toast.LENGTH_SHORT).show()
+            }
             serving = 0
-            resetOutput()
-            Toast.makeText(this, "Process completed!", Toast.LENGTH_SHORT).show()
         }
         binding.button2.setOnClickListener {
+
+            if(serving==1){
+                resetOutput()
+                processTicket(servingTicket, 0)
+                Toast.makeText(this, "Process cancelled!", Toast.LENGTH_SHORT).show()
+            }
+
             serving = 0
-            resetOutput()
-            Toast.makeText(this, "Process cancelled!", Toast.LENGTH_SHORT).show()
         }
 
         // Next Customer button
@@ -113,6 +117,7 @@ class EmployeeQueue : AppCompatActivity() {
                     serving = 1
                     database.getNextCustomer(eQueue){targetTicket ->
                         servingTicket = targetTicket[0]
+                        servingTicket.updateExitTime()
                         println(servingTicket.name + " " + servingTicket.processType)
                         database.dequeue(eQueue)
                     }
@@ -122,6 +127,41 @@ class EmployeeQueue : AppCompatActivity() {
         }
 
     }
+
+    @SuppressLint("SetTextI18n")
+    // It resets the info area
+    fun resetOutput(){
+        binding.textView1.text = "Name: "
+        binding.textView2.text = "Surname: "
+        binding.textView3.text = "Process Type: "
+    }
+
+    // Performs final processes to the serving ticket,
+    // then saves the ticket to the collection.
+    fun processTicket(ticket: Ticket, status: Int){
+
+        if(status==1){
+            ticket.result = "Completed"
+        }
+        else{
+            ticket.result = "Cancelled"
+        }
+        database.getDocumentByField("Employees", "uid", user_uid){data->
+
+
+
+            val emp_name = data?.get("name").toString() + " " + data?.get("surname").toString()
+            ticket.served_employee = emp_name
+            ticket.updateEndServeTime()
+            ticket.calculateProcessTime()
+            ticket.calculateWaitTime()
+            database.addData("Tickets", ticket)
+
+        }
+
+
+    }
+
 }
 
 

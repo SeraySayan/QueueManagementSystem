@@ -3,7 +3,6 @@ package com.example.queuemanagement
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.queuemanagement.databinding.ActivityMainBinding
@@ -71,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         else{
-                            intent = Intent(this, CustomerMenuActivity::class.java)
+                            intent = Intent(this, CustomerMenu::class.java)
                             intent.putExtra("uid", firebaseAuth.uid)
                             startActivity(intent)
                         }

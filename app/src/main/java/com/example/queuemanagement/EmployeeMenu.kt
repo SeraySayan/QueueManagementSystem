@@ -6,10 +6,6 @@ import android.os.Bundle
 import com.example.queuemanagement.databinding.ActivityEmployeeMenuBinding
 import com.example.queuemanagement.databinding.ActivityMainBinding
 
-
-// TODO : binding ekle
-
-
 class EmployeeMenu : AppCompatActivity() {
 
     lateinit var binding: ActivityEmployeeMenuBinding
@@ -19,8 +15,12 @@ class EmployeeMenu : AppCompatActivity() {
         binding = ActivityEmployeeMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // getting uid of the employee
+        val user_uid = intent.getStringExtra("uid")
+
         binding.button.setOnClickListener {
             intent = Intent(this, EmployeeQueue::class.java)
+            intent.putExtra("uid", user_uid)
             startActivity(intent)
 
         }

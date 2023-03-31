@@ -1,6 +1,5 @@
 package com.example.queuemanagement
 
-import ClassFiles.Customer
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -38,7 +37,7 @@ class Welcome : AppCompatActivity(){
         TestButton.setOnClickListener(){
 
             //intent = Intent(this, TestQueue::class.java)
-            intent = Intent(this, CustomerMenuActivity::class.java)
+            intent = Intent(this, CustomerMenu::class.java)
             startActivity(intent)
 
 
