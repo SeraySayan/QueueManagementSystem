@@ -6,7 +6,7 @@ import java.util.*
 class Ticket {
 
     var priority = 0
-    var date_time: Timestamp? = null
+    var date_time: Timestamp? = null // EntryTime to queue
     var exitTime: Timestamp? = null
     var endServeTime: Timestamp? = null
     var total_process_time: Timestamp? = null

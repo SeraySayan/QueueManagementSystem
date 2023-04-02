@@ -43,8 +43,6 @@ class EmployeeQueue : AppCompatActivity() {
     var user_uid = ""                                   // Employee's uid for database query
 
 
-
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +68,6 @@ class EmployeeQueue : AppCompatActivity() {
 
                 // If there is at least one ticket in queue
                 if(serving == 1){
-                    //TODO:if there is no one, add the first one; if there is, wait
                     binding.textView1.text = "Name: "+ servingTicket.name
                     binding.textView2.text = "Surname: "+ servingTicket.surname
                     binding.textView3.text = "Process Type: "+ servingTicket.processType
@@ -112,7 +109,10 @@ class EmployeeQueue : AppCompatActivity() {
             // Listen to the queue. If its empty, do nothing.
             database.getQueueTEST(eQueue){ data->
 
-                if (data.size > 0){
+
+                // In order to call next customer, queue must be non-empty
+                // and the employee must be free (without any serving)
+                if ((data.size > 0) && serving == 0){
 
                     serving = 1
                     database.getNextCustomer(eQueue){targetTicket ->
