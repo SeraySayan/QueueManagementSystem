@@ -4,16 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmployeeQueue"
-    android:background="@drawable/loginbkg">
+    android:background="@drawable/loginbkg"
+    tools:context=".EmployeeQueue">
 
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="183dp"
+        android:layout_height="57dp"
+        android:text="Next Customer"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="316dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/border"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="6dp">

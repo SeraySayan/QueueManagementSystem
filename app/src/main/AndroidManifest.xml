@@ -14,6 +14,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CustomerHistory"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ChangeBranch"
             android:exported="false">
             <meta-data
@@ -112,7 +119,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".CustomerMenuActivity"
+            android:name=".CustomerMenu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

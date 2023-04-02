@@ -58,22 +58,6 @@ class CustomerTransaction : AppCompatActivity() {
 
         }
 
-        /*database.listenToChanges(selected_queue) { querySnapshot ->
-
-            //TODO: TEST versiyonunda hata var. normal hali çalışıyor. queue size çalışıyor, timing için class yapmayı dene
-            database.getQueueTEST(selected_queue) { tickets ->
-
-                var queue_size =  tickets.size  // getting the queue size
-                binding.peopleCount.setText("There are $queue_size customers in the line")
-
-                var est_wait_time = 0
-                for (ticket in tickets){
-                    est_wait_time += map[ticket.processType]!! // TODO: BURAYA BAK !!!!!
-                }
-                binding.remainingTime.setText("Estimated waiting time is: $est_wait_time min.")
-
-            }
-        }*/
 
         var processType = ""
         // Dropdown menu
@@ -117,13 +101,9 @@ class CustomerTransaction : AppCompatActivity() {
                 var name = data?.get("name").toString()
                 var surname = data?.get("surname").toString()
 
-                database.addData(selected_queue,Ticket(
-                    priority,
-                    processType,
-                    user_uid,
-                    name,
-                    surname
-                ))
+                var ticket = Ticket(priority, processType, user_uid, name, surname)
+                ticket.updateStartTime()
+                database.addData(selected_queue,ticket)
 
                 intent = Intent(this, CustomerActiveQueue::class.java)
                 intent.putExtra("queue",selected_queue)
@@ -133,20 +113,8 @@ class CustomerTransaction : AppCompatActivity() {
 
             }
 
-
-
-
-
-            // TODO: oluşan ticket'ı queue'ya sok.
-            // TODO: Sonra Active Queue'ya intent at.
-
         }
 
-
-
     }
-
-
-
 
 }
