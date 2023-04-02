@@ -33,6 +33,12 @@ class CustomerMenu : AppCompatActivity() {
 
         }
 
+        binding.button6.setOnClickListener{
+            intent = Intent(this, CustomerHistory::class.java)
+            intent.putExtra("uid",user_uid)
+            startActivity(intent)
+        }
+
 
 
     }
