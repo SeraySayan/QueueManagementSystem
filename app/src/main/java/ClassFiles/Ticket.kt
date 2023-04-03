@@ -1,6 +1,8 @@
 package ClassFiles
 
 import com.google.firebase.Timestamp
+import java.time.Duration
+import java.time.Instant
 import java.util.*
 
 class Ticket {
@@ -9,8 +11,8 @@ class Ticket {
     var date_time: Timestamp? = null // EntryTime to queue
     var exitTime: Timestamp? = null
     var endServeTime: Timestamp? = null
-    var total_process_time: Timestamp? = null
-    var total_waited_time: Timestamp? = null // TODO: Fix format
+    var total_process_time: String? = null
+    var total_waited_time: String? = null // TODO: Fix format
     var processType = ""
     var served_employee =""
     var customer_id = ""
@@ -51,10 +53,10 @@ class Ticket {
 
     fun calculateWaitTime() {
         if (date_time != null && exitTime != null) {
-            val entryDate = date_time!!.toDate()
-            val exitDate = exitTime!!.toDate()
-            val waitTimeInMillis = exitDate.time - entryDate.time
-            this.total_waited_time = Timestamp(Date(waitTimeInMillis))
+
+            this.total_waited_time =  formatTimestamp(exitTime!!, date_time!!)
+
+
         } else {
             throw IllegalStateException("Both entryTime and exitTime must be set to calculate wait time")
         }
@@ -62,10 +64,8 @@ class Ticket {
 
     fun calculateProcessTime() {
         if (endServeTime != null && exitTime != null) {
-            val endServeDate = endServeTime!!.toDate()
-            val exitDate = exitTime!!.toDate()
-            val processTimeInMillis = endServeDate.time - exitDate.time
-            this.total_process_time = Timestamp(Date(processTimeInMillis))
+
+            this.total_process_time =  formatTimestamp(exitTime!!, endServeTime!!)
         } else {
             throw IllegalStateException("Both endServeDate and exitTime must be set to calculate wait time")
         }
@@ -76,6 +76,23 @@ class Ticket {
     }
 
 
+}
+
+fun formatDuration(duration: Duration): String {
+    val minutes = duration.toMinutes()
+    val seconds = duration.minusMinutes(minutes).seconds
+    val builder = StringBuilder()
+    if (minutes > 0) {
+        builder.append("$minutes" + "m ")
+    }
+    builder.append("$seconds" + "s")
+    return builder.toString()
+}
 
 
+fun formatTimestamp(timestamp1: Timestamp, timestamp2: Timestamp): String {
+    val instant1 = Instant.ofEpochSecond(timestamp1.seconds)
+    val instant2 = Instant.ofEpochSecond(timestamp2.seconds)
+    val duration = Duration.between(instant2, instant1)
+    return formatDuration(duration)
 }
