@@ -65,7 +65,6 @@ class FirestoreDB  {
                 Log.d("getDocumentSnapshot", "FAILED", exception)
                 callback(null)
             }
-
     }
 
 

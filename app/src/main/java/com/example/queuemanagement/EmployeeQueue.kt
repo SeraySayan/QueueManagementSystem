@@ -49,82 +49,95 @@ class EmployeeQueue : AppCompatActivity() {
         binding = ActivityEmployeeQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
         user_uid = intent.getStringExtra("uid").toString()
-
-
-        val eQueue="/Queue/queue1/TicketsInQueue" //TODO: databaseden hangi queue olduğunu çek
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-        database.listenToChanges(eQueue){ querySnapshot ->
 
-            var queueList = mutableListOf<Ticket>()
-            database.getQueueTEST(eQueue) { data ->
+        database.getDocumentByField("Employees","uid",user_uid){ data ->
 
-                // data is the ticket list of queue
-                for (x in data){
-                    queueList.add(x)
+            val branchMap = data?.get("branch") as Map<*, *>
+            val eQueue = branchMap["Queue"] as String
+
+            database.listenToChanges(eQueue){ querySnapshot ->
+
+                var queueList = mutableListOf<Ticket>()
+                database.getQueueTEST(eQueue) { data ->
+
+                    // data is the ticket list of queue
+                    for (x in data){
+                        queueList.add(x)
+                    }
+
+                    // If there is at least one ticket in queue
+                    if(serving == 1){
+                        binding.textView1.text = "Name: "+ servingTicket.name
+                        binding.textView2.text = "Surname: "+ servingTicket.surname
+                        binding.textView3.text = "Process Type: "+ servingTicket.processType
+                    }
+                    // If queue is empty
+                    else{
+                        resetOutput()
+                    }
+                    // Update the adapter with other values
+                    val adapter = QueueAdapter(queueList, this)
+                    binding.recyclerView.adapter = adapter
                 }
+            }
 
-                // If there is at least one ticket in queue
-                if(serving == 1){
-                    binding.textView1.text = "Name: "+ servingTicket.name
-                    binding.textView2.text = "Surname: "+ servingTicket.surname
-                    binding.textView3.text = "Process Type: "+ servingTicket.processType
-                }
-                // If queue is empty
-                else{
+            // Dequeue buttons
+            binding.button1.setOnClickListener {
+
+                if(serving==1){
                     resetOutput()
+                    processTicket(servingTicket, 1)
+                    Toast.makeText(this, "Process completed!", Toast.LENGTH_SHORT).show()
                 }
-                // Update the adapter with other values
-                val adapter = QueueAdapter(queueList, this)
-                binding.recyclerView.adapter = adapter
+                serving = 0
             }
-        }
+            binding.button2.setOnClickListener {
 
-        // Dequeue buttons
-        binding.button1.setOnClickListener {
+                if(serving==1){
+                    resetOutput()
+                    processTicket(servingTicket, 0)
+                    Toast.makeText(this, "Process cancelled!", Toast.LENGTH_SHORT).show()
+                }
 
-            if(serving==1){
-                resetOutput()
-                processTicket(servingTicket, 1)
-                Toast.makeText(this, "Process completed!", Toast.LENGTH_SHORT).show()
-            }
-            serving = 0
-        }
-        binding.button2.setOnClickListener {
-
-            if(serving==1){
-                resetOutput()
-                processTicket(servingTicket, 0)
-                Toast.makeText(this, "Process cancelled!", Toast.LENGTH_SHORT).show()
+                serving = 0
             }
 
-            serving = 0
-        }
+            // Next Customer button
+            binding.button7.setOnClickListener{
 
-        // Next Customer button
-        binding.button7.setOnClickListener{
-
-            // Listen to the queue. If its empty, do nothing.
-            database.getQueueTEST(eQueue){ data->
+                // Listen to the queue. If its empty, do nothing.
+                database.getQueueTEST(eQueue){ data->
 
 
-                // In order to call next customer, queue must be non-empty
-                // and the employee must be free (without any serving)
-                if ((data.size > 0) && serving == 0){
+                    // In order to call next customer, queue must be non-empty
+                    // and the employee must be free (without any serving)
+                    if ((data.size > 0) && serving == 0){
 
-                    serving = 1
-                    database.getNextCustomer(eQueue){targetTicket ->
-                        servingTicket = targetTicket[0]
-                        servingTicket.updateExitTime()
-                        println(servingTicket.name + " " + servingTicket.processType)
-                        database.dequeue(eQueue)
+                        serving = 1
+                        database.getNextCustomer(eQueue){targetTicket ->
+                            servingTicket = targetTicket[0]
+                            servingTicket.updateExitTime()
+                            println(servingTicket.name + " " + servingTicket.processType)
+                            database.dequeue(eQueue)
+                        }
                     }
                 }
+
             }
 
+
+
         }
+
+
+
+
+
+
+
 
     }
 
