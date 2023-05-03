@@ -13,7 +13,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
 import java.time.Instant
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //val user_uid:String //probably no need
                                    private val context: Context): RecyclerView.Adapter<CustomerTicketHistoryAdapter.CustomerViewHolder>() {
@@ -24,6 +27,7 @@ class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //v
         val tvProcessType: TextView =itemView.findViewById(R.id.textView3)
         val tvWaitTime: TextView =itemView.findViewById(R.id.textView7)
         val tvProcessTime : TextView = itemView.findViewById(R.id.textView8)
+        val tvDate : TextView = itemView.findViewById(R.id.textViewDate)
 
         init {
             itemView.setOnClickListener(this)
@@ -46,8 +50,11 @@ class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //v
         holder.tvProcessType.text = "Employee: ${ticketList[position].served_employee}"
         holder.tvWaitTime.text = "Waited time: ${ticketList[position].total_waited_time}"
         holder.tvProcessTime.text = "Process Time: ${ticketList[position].total_process_time}"
-        //holder.tvWaitTime.text = "Waited time: za"
-        // holder.tvID.text =branchlist[position].id.toString()
+        // Format Timestamp for proper printing
+        val date = ticketList[position].date_time?.toDate()
+        val format = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+        val formattedDate = format.format(date)
+        holder.tvDate.text = "$formattedDate"
     }
 
     override fun getItemCount(): Int {
