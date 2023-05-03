@@ -33,6 +33,7 @@ class BranchList : AppCompatActivity() {
         var user_uid = intent.getStringExtra("uid").toString()
 
 
+
         binding.recyclerView.layoutManager =LinearLayoutManager(this)
         branchList = arrayListOf()
 

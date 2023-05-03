@@ -131,6 +131,7 @@ class FirestoreDB  {
                     var myticket = Ticket(
                         document.data["priority"].toString().toInt(),
                         document.data["processType"].toString(),
+                        document.data["branch_name"].toString(),
                         document.data["customer_id"].toString(),
                         document.data["name"].toString(),
                         document.data["surname"].toString()
@@ -227,6 +228,7 @@ class FirestoreDB  {
         //ticket.exitTime = doc.getTimestamp("exitTime")
         //ticket.total_waited_time = doc.getTimestamp("total_waited_time")
         ticket.processType = doc.getString("processType") ?: ""
+        ticket.branch_name = doc.getString("branch_name") ?: ""
         ticket.served_employee = doc.getString("served_employee") ?: ""
         ticket.customer_id = doc.getString("customer_id") ?: ""
         ticket.name = doc.getString("name") ?: ""

@@ -23,9 +23,14 @@ class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //v
         val tvSurname: TextView = itemView.findViewById(R.id.textView2)
         val tvProcessType: TextView =itemView.findViewById(R.id.textView3)
         val tvWaitTime: TextView =itemView.findViewById(R.id.textView7)
+        val tvProcessTime : TextView = itemView.findViewById(R.id.textView8)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         override fun onClick(v: View?) {
-            TODO("Not yet implemented")
-            print("saaaa")
+            println("zaaaaaaaaaaaaaaaaaaaaa\n")
         }
     }
 
@@ -36,11 +41,11 @@ class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //v
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CustomerViewHolder, position: Int) {
-        holder.tvName.text = "Name: ${ticketList[position].name}"
-        holder.tvSurname.text = "Surname: ${ticketList[position].surname}"
-        holder.tvProcessType.text = "Process Type: ${ticketList[position].processType}"
-
+        holder.tvName.text = "Branch: ${ticketList[position].branch_name}"
+        holder.tvSurname.text = "Process Type: ${ticketList[position].processType}"
+        holder.tvProcessType.text = "Employee: ${ticketList[position].served_employee}"
         holder.tvWaitTime.text = "Waited time: ${ticketList[position].total_waited_time}"
+        holder.tvProcessTime.text = "Process Time: ${ticketList[position].total_process_time}"
         //holder.tvWaitTime.text = "Waited time: za"
         // holder.tvID.text =branchlist[position].id.toString()
     }

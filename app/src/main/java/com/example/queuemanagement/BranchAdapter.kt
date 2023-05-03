@@ -39,6 +39,7 @@ class BranchAdapter(private val branchlist:ArrayList<Branchs>, val user_uid:Stri
             Log.d("ItemClick", "Item at position $position clicked")
             val intent = Intent(context, CustomerTransaction::class.java )
             intent.putExtra("uid", user_uid)
+            intent.putExtra("branch_name",branchlist[position].name)
             intent.putExtra("queue_location", branchlist[position].Queue)
             context.startActivity(intent)
 

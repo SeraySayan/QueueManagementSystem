@@ -3,7 +3,6 @@ package ClassFiles
 import com.google.firebase.Timestamp
 import java.time.Duration
 import java.time.Instant
-import java.util.*
 
 class Ticket {
 
@@ -15,15 +14,24 @@ class Ticket {
     var total_waited_time: String? = null // TODO: Fix format
     var processType = ""
     var served_employee =""
+    var branch_name = ""
     var customer_id = ""
     var name = ""
     var surname = ""
     var result = ""
 
     // Constructor with name and surname
-    constructor(priority:Int,  processType:String, customer_id:String, name:String, surname:String){
+    constructor(
+        priority: Int,
+        processType: String,
+        branch: String,
+        customer_id: String,
+        name: String,
+        surname: String
+    ){
         this.priority = priority
         this.processType = processType
+        this.branch_name = branch
         this.customer_id = customer_id
         this.date_time = Timestamp.now()
         this.name = name
@@ -65,7 +73,7 @@ class Ticket {
     fun calculateProcessTime() {
         if (endServeTime != null && exitTime != null) {
 
-            this.total_process_time =  formatTimestamp(exitTime!!, endServeTime!!)
+            this.total_process_time =  formatTimestamp(endServeTime!!, exitTime!!)
         } else {
             throw IllegalStateException("Both endServeDate and exitTime must be set to calculate wait time")
         }
