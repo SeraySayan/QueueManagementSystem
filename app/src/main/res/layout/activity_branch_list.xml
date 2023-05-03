@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/loginbkg"
-    tools:context=".MainActivity"
-    android:clickable="true">
+    tools:context=".MainActivity">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/list_item"
-        android:contextClickable="true"
-        android:clickable="true"/>
+        tools:listitem="@layout/list_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
