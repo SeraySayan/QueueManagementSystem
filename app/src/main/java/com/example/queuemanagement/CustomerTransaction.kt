@@ -35,6 +35,7 @@ class CustomerTransaction : AppCompatActivity() {
         // Getting selected queue and user uid from previous activity
         val selected_queue = intent.getStringExtra("queue_location").toString()
         val user_uid = intent.getStringExtra("uid").toString()
+        var branch_name = intent.getStringExtra("branch_name").toString()
         var priority=1//initialization of priority
         // TODO:ilk bunu alıp yanlış değerleri gösteriyor, gir çık yapınca doğru değerleri gösteriyor,düzelt
         //taking the priority from database
@@ -101,7 +102,7 @@ class CustomerTransaction : AppCompatActivity() {
                 var name = data?.get("name").toString()
                 var surname = data?.get("surname").toString()
 
-                var ticket = Ticket(priority, processType, user_uid, name, surname)
+                var ticket = Ticket(priority, processType,branch_name, user_uid, name, surname)
                 ticket.updateStartTime()
                 database.addData(selected_queue,ticket)
 
