@@ -13,7 +13,7 @@ import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>)
+class CustomerTicketHistoryAdapter(private var ticketList:ArrayList<Ticket>)
     : RecyclerView.Adapter<CustomerTicketHistoryAdapter.CustomerViewHolder>() {
 
     class CustomerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -56,6 +56,11 @@ class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>)
         return ticketList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun sortDataByField() {
+        ticketList.sortByDescending{it.date_time}
+        notifyDataSetChanged()
+    }
 
 
 

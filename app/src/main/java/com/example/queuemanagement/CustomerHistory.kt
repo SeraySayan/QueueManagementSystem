@@ -33,7 +33,8 @@ class CustomerHistory : AppCompatActivity() {
                         val ticket:Ticket? =data.toObject(Ticket::class.java)
                         ticketList.add(ticket!!)
                     }
-                    val adapter = CustomerTicketHistoryAdapter(ticketList)
+                    var adapter = CustomerTicketHistoryAdapter(ticketList)
+                    adapter.sortDataByField()
                     binding.recyclerViewCus.adapter = adapter
 
                 }
