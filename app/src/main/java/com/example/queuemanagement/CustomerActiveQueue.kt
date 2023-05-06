@@ -19,6 +19,7 @@ class CustomerActiveQueue : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var leaveButtonPressed = false
 
 
         // Getting User uid and selected queue directory
@@ -43,8 +44,18 @@ class CustomerActiveQueue : AppCompatActivity() {
                 // If position = 0, that means this ticket is dequeued by employee
                 // So, Toast a message and finish activity
                 if(tickets[0].toString().toInt() == 0){
-                    Toast.makeText(this, "Your Process has been finished", Toast.LENGTH_SHORT).show()
-                    //finish()
+
+                    if(!leaveButtonPressed){
+                        // Sends the user to Queue Finished screen
+                        Toast.makeText(this, "Queue is finished, your turn", Toast.LENGTH_SHORT).show()
+                        intent = Intent(this, CustomerQueueFinished::class.java)
+                        intent.putExtra("uid",uid)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(this, "Your leaved the queue", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
             }
@@ -54,6 +65,7 @@ class CustomerActiveQueue : AppCompatActivity() {
         }
         //TODO: Implement LeaveQueue
         binding.LeaveQueueButton.setOnClickListener {
+            leaveButtonPressed = true
             database.leaveQueue(selected_queue,uid)
             finish()
 
