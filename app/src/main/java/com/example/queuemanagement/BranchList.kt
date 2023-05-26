@@ -17,8 +17,6 @@ class BranchList : AppCompatActivity() {
 
     private var db= FirebaseFirestore.getInstance() // TODO: implement custom class
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBranchListBinding.inflate(layoutInflater)
@@ -26,8 +24,6 @@ class BranchList : AppCompatActivity() {
 
         db= FirebaseFirestore.getInstance()
         var user_uid = intent.getStringExtra("uid").toString()
-
-
 
         binding.recyclerView.layoutManager =LinearLayoutManager(this)
         branchList = arrayListOf()
@@ -48,12 +44,6 @@ class BranchList : AppCompatActivity() {
             .addOnFailureListener{
                 Toast.makeText(this,it.toString(),Toast.LENGTH_SHORT).show()
             }
-
-
-
-
-
-
 
     }
 

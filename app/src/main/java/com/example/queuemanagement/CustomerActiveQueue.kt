@@ -1,36 +1,33 @@
 package com.example.queuemanagement
 
-import ClassFiles.*
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.queuemanagement.databinding.ActivityCustomerActiveQueueBinding
-import com.google.firebase.*
-import com.google.firebase.firestore.*
-
 
 
 class CustomerActiveQueue : AppCompatActivity() {
 
     private lateinit var binding: ActivityCustomerActiveQueueBinding
     val database = FirestoreDB()
+    var leaveButtonPressed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var leaveButtonPressed = false
+        leaveButtonPressed = false
 
 
         // Getting User uid and selected queue directory
         var uid = intent.getStringExtra("uid").toString()
         var selected_queue = intent.getStringExtra("queue").toString()
         var priority = intent.getIntExtra("priority",1)
-        //it only takes the ones whose priorities are bigger or equal to the this ticket and wait_times
 
+        //it only takes the ones whose priorities are bigger or equal to the this ticket and wait_times
         database.listenToChanges(selected_queue) { querySnapshot ->
 
-            database.getQueueActive2(selected_queue, uid, priority) { tickets, wait_times ->
+            database.getQueueActive(selected_queue, uid, priority) { tickets, wait_times, ticketInQueue ->
 
                 binding.queueNum.setText(tickets[0].toString())
 
@@ -41,35 +38,39 @@ class CustomerActiveQueue : AppCompatActivity() {
                 binding.estRemaining.setText(total_time.toString())
 
 
-                // If position = 0, that means this ticket is dequeued by employee
-                // So, Toast a message and finish activity
-                if(tickets[0].toString().toInt() == 0){
+                //Sending notification if position is 1 (before the top of the queue)
+                if(tickets[0] == 1){
+                    //TODO: Notificaiton
+                }
 
+                // If ticketInQueue == false, that means there is no ticket
+                // in the queue with the user uid. So, leave the queue screen
+                if(!ticketInQueue){
+
+                    // If the ticket dequeued by employee (no button press)
+                    // then navigate to the queue finished screen
                     if(!leaveButtonPressed){
                         // Sends the user to Queue Finished screen
                         Toast.makeText(this, "Queue is finished, your turn", Toast.LENGTH_SHORT).show()
                         intent = Intent(this, CustomerQueueFinished::class.java)
                         intent.putExtra("uid",uid)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                         startActivity(intent)
                     }
+                    // If user pressed the leave queue button, navigate back
                     else{
                         Toast.makeText(this, "Your leaved the queue", Toast.LENGTH_SHORT).show()
+                        finish()
                     }
-
                 }
-
             }
-
-
-
         }
-        //TODO: Implement LeaveQueue
+
         binding.LeaveQueueButton.setOnClickListener {
             leaveButtonPressed = true
             database.leaveQueue(selected_queue,uid)
-            finish()
-
         }
+
     }
 
 }

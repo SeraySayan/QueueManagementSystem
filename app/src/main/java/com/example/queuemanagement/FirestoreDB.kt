@@ -69,10 +69,11 @@ class FirestoreDB  {
 
 
     @SuppressLint("SuspiciousIndentation")
-    fun getQueueActive2(collection: String, uid : String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
+    fun getQueueActive(collection: String, uid : String, priority : Int, callback: (MutableList<Int>, MutableList<Int>, Boolean) -> Unit) {
     //according to priority,correct time calculation for active queue page
         val CurrentIndex = mutableListOf<Int>()
         var WaitingTime = mutableListOf<Int>()
+        var ticketInQueue = false
         CurrentIndex.add(0)
         db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
             .get()
@@ -82,6 +83,7 @@ class FirestoreDB  {
                     if(document.data["priority"].toString().toInt() >= priority){
                         if(document.data["customer_id"].toString().equals(uid)){
                             CurrentIndex[0] = (result.indexOf(document)+1)
+                            ticketInQueue = true
                             break
                         }
                         else{
@@ -90,7 +92,8 @@ class FirestoreDB  {
                     }
 
                 }
-                callback(CurrentIndex, WaitingTime)
+
+                callback(CurrentIndex, WaitingTime, ticketInQueue)
             }
             .addOnFailureListener { exception ->
                 Log.d("getQueue", "Error getting documents: ", exception)
