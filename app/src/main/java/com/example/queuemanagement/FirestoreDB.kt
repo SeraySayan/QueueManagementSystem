@@ -69,36 +69,61 @@ class FirestoreDB  {
 
 
     @SuppressLint("SuspiciousIndentation")
-    fun getQueueActive(collection: String, uid : String, priority : Int, callback: (MutableList<Int>, MutableList<Int>, Boolean) -> Unit) {
-    //according to priority,correct time calculation for active queue page
-        val CurrentIndex = mutableListOf<Int>()
-        var WaitingTime = mutableListOf<Int>()
+    fun getQueueActive(
+        collection: String,
+        uid: String,
+        priority: Int,
+        listenerRegistration: ListenerRegistration?,
+        callback: (MutableList<Int>, MutableList<Int>, Boolean) -> Unit
+    ): ListenerRegistration {
+        val currentIndex = mutableListOf<Int>()
+        var waitingTime = mutableListOf<Int>()
         var ticketInQueue = false
-        CurrentIndex.add(0)
-        db.collection(collection).orderBy("priority",Query.Direction.DESCENDING).orderBy("date_time")
-            .get()
-            .addOnSuccessListener { result ->
+
+        val query = db.collection(collection)
+            .orderBy("priority", Query.Direction.DESCENDING)
+            .orderBy("date_time")
+
+        // Remove the existing listener before adding a new one
+        listenerRegistration?.remove()
+
+        val newListenerRegistration = query.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                Log.d("getQueue", "Error getting documents: ", exception)
+                return@addSnapshotListener
+            }
+
+            snapshot?.let { result ->
+                currentIndex.clear()
+                waitingTime.clear()
+                ticketInQueue = false
 
                 for (document in result) {
-                    if(document.data["priority"].toString().toInt() >= priority){
-                        if(document.data["customer_id"].toString().equals(uid)){
-                            CurrentIndex[0] = (result.indexOf(document)+1)
+                    if (document.data["priority"].toString().toInt() >= priority) {
+                        if (document.data["customer_id"].toString() == uid) {
+                            currentIndex.add(result.indexOf(document) + 1)
                             ticketInQueue = true
                             break
-                        }
-                        else{
-                            WaitingTime.add(map[document.get("processType")]!!)
+                        } else {
+                            waitingTime.add(map[document.get("processType")]!!)
                         }
                     }
-
                 }
 
-                callback(CurrentIndex, WaitingTime, ticketInQueue)
+                if(currentIndex.size<1){
+                    currentIndex.add(0)
+                }
+
+                callback(currentIndex, waitingTime, ticketInQueue)
             }
-            .addOnFailureListener { exception ->
-                Log.d("getQueue", "Error getting documents: ", exception)
-            }
+        }
+
+        // Return the new listener registration
+        return newListenerRegistration
     }
+
+
+
 
     fun getTransactionQueue(collection: String,priority : Int, callback: (MutableList<Int>, MutableList<Int>) -> Unit) {
         //according to priority, time and size calculation to show in transaction page
