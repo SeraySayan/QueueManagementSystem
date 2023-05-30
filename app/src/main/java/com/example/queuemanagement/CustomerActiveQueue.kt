@@ -13,13 +13,18 @@ class CustomerActiveQueue : AppCompatActivity() {
     private lateinit var binding: ActivityCustomerActiveQueueBinding
     private val database = FirestoreDB()
     private var listenerRegistration: ListenerRegistration? = null
-    private var leaveButtonPressed = false
+
+    // Keeping the leaveButtonPressed shared between db listener and button listener
+    companion object{
+         var leaveButtonPressed: Boolean = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
         leaveButtonPressed = false
+
 
         // Getting User uid and selected queue directory
         val uid = intent.getStringExtra("uid").toString()
