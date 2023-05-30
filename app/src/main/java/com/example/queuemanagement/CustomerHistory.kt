@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.queuemanagement.databinding.ActivityCustomerListBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.channels.ticker
 
 class CustomerHistory : AppCompatActivity() {
     lateinit var binding: ActivityCustomerListBinding
@@ -34,7 +33,8 @@ class CustomerHistory : AppCompatActivity() {
                         val ticket:Ticket? =data.toObject(Ticket::class.java)
                         ticketList.add(ticket!!)
                     }
-                    val adapter = CustomerTicketHistoryAdapter(ticketList, this)
+                    var adapter = CustomerTicketHistoryAdapter(ticketList)
+                    adapter.sortDataByField()
                     binding.recyclerViewCus.adapter = adapter
 
                 }

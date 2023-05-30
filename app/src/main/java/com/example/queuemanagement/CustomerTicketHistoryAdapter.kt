@@ -1,12 +1,7 @@
 package com.example.queuemanagement
 import java.time.Duration
-import ClassFiles.Branchs
-import ClassFiles.Customer
 import ClassFiles.Ticket
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +13,8 @@ import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //val user_uid:String //probably no need
-                                   private val context: Context): RecyclerView.Adapter<CustomerTicketHistoryAdapter.CustomerViewHolder>() {
+class CustomerTicketHistoryAdapter(private var ticketList:ArrayList<Ticket>)
+    : RecyclerView.Adapter<CustomerTicketHistoryAdapter.CustomerViewHolder>() {
 
     class CustomerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val tvName: TextView = itemView.findViewById(R.id.textView1)
@@ -53,14 +48,19 @@ class CustomerTicketHistoryAdapter(private val ticketList:ArrayList<Ticket>, //v
         // Format Timestamp for proper printing
         val date = ticketList[position].date_time?.toDate()
         val format = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
-        val formattedDate = format.format(date)
-        holder.tvDate.text = "$formattedDate"
+        val formattedDate = format.format(date!!)
+        holder.tvDate.text = formattedDate
     }
 
     override fun getItemCount(): Int {
         return ticketList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun sortDataByField() {
+        ticketList.sortByDescending{it.date_time}
+        notifyDataSetChanged()
+    }
 
 
 

@@ -1,6 +1,5 @@
 package com.example.queuemanagement
 
-import ClassFiles.Branchs
 import ClassFiles.Customer
 import android.content.Context
 import android.content.Intent

@@ -24,6 +24,6 @@ class Employee : User {
         age = 0
 
     }
-    var branch : Branchs = Branchs()
+    var branch : Branch = Branch()
 
 }

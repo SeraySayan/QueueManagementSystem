@@ -1,7 +1,7 @@
 package ClassFiles
 
 
-data class Branchs(
+data class Branch(
     val name:String?=null,
     val location:Float?=null,
     val Queue:String?=null
