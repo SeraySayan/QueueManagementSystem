@@ -110,7 +110,7 @@ class CustomerActiveQueue : AppCompatActivity() {
         val notificationId = 1
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.arrow)
+                .setSmallIcon(R.drawable.queue_mamangement_icon)
             .setContentTitle("Your Turn")
             .setContentText("You are the next customer to service on the qeuue")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
