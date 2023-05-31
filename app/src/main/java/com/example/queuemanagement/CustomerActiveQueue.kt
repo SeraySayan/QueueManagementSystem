@@ -2,6 +2,7 @@ package com.example.queuemanagement
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -51,7 +52,7 @@ class CustomerActiveQueue : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "your_turn_notification"
             val channelName = "Queue Your Turn Notification"
-            val channelDescription = "This will be sent when the user on position 1"
+            val channelDescription = "This will be sent by the position"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, channelName, importance).apply {
                 description = channelDescription
@@ -79,10 +80,16 @@ class CustomerActiveQueue : AppCompatActivity() {
             }
             binding.estRemaining.text = totalTime.toString()
 
-            // Sending notification if position is 1 (before the top of the queue)
-            if (tickets[0] == 1) {
-                sendNotification()
+
+            // Sending notification if position is 2 (before the top of the queue)
+            if (tickets[0] == 2) {
+                sendNotification("Get Ready", "You are on position 2. Get ready for service")
             }
+            // Sending notification if position is 1 (top of the queue)
+            if (tickets[0] == 1) {
+                sendNotification("Your Turn", "It's your turn on the queue")
+            }
+
 
             // If ticketInQueue == false, that means there is no ticket
             // in the queue with the user uid. So, leave the queue screen
@@ -105,19 +112,27 @@ class CustomerActiveQueue : AppCompatActivity() {
         listenerRegistration = null
     }
 
-    private fun sendNotification() {
+    private fun sendNotification(title: String, text: String) {
         val channelId = "your_turn_notification"
         val notificationId = 1
 
+        // Create an explicit intent for the current Activity in your app
+        val intent = Intent(this, CustomerActiveQueue::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
+
         val builder = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.queue_mamangement_icon)
-            .setContentTitle("Your Turn")
-            .setContentText("You are the next customer to service on the qeuue")
+            .setSmallIcon(R.drawable.queue_mamangement_icon)
+            .setContentTitle(title)
+            .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
         val notificationManager = NotificationManagerCompat.from(this)
         notificationManager.notify(notificationId, builder.build())
     }
+
+
 
 
     override fun onDestroy() {
