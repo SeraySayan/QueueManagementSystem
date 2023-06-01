@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">QueueManagement</string>
     <string name="register">Register</string>
+    <string name="app_icon">"@drawable/queue_mamangement_icon_v2"</string>
 </resources>
