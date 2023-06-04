@@ -6,11 +6,13 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.queuemanagement.databinding.ActivityCustomerActiveQueueBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
 
@@ -25,12 +27,19 @@ class CustomerActiveQueue : AppCompatActivity() {
          var leaveButtonPressed: Boolean = false
     }
 
+
+
+    // Dynamic priority delay things
+    private lateinit var handler: Handler
+    private lateinit var updateRunnable: Runnable
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerActiveQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
         leaveButtonPressed = false
-
 
         // Getting User uid and selected queue directory
         val uid = intent.getStringExtra("uid").toString()
@@ -61,6 +70,8 @@ class CustomerActiveQueue : AppCompatActivity() {
             notificationManager?.createNotificationChannel(channel)
         }
 
+        // Fetch the delay time from Firestore and schedule the update
+        fetchDelayTimeAndScheduleUpdate(selectedQueue, uid, priority.toInt())
 
     }
 
@@ -132,11 +143,46 @@ class CustomerActiveQueue : AppCompatActivity() {
         notificationManager.notify(notificationId, builder.build())
     }
 
+    private fun fetchDelayTimeAndScheduleUpdate(selectedQueue: String, uid: String, priority: Int) {
+        // Get a reference to the Firestore collection and document
+
+        val db = FirebaseFirestore.getInstance()
+        val queueDocRef = db.collection("DynamicPriority").document("threshold")
+
+        // Fetch the document data
+        queueDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // Retrieve the delay time from the document
+                    val delayTime = documentSnapshot.getLong("seconds")
+
+                    if (delayTime != null) {
+                        // Schedule the update after the delay time
+                        handler = Handler()
+                        updateRunnable = Runnable {
+                            // Perform the update operation
+                            database.updateDynamicPriority(selectedQueue, uid, priority)
+
+                        }
+                        handler.postDelayed(updateRunnable, delayTime*1000)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle the failure to fetch the document data
+            }
+    }
+
+    private fun updateDocumentAfterDelay(selectedQueue: String, uid: String) {
+        // ...
+    }
+
 
 
 
     override fun onDestroy() {
         super.onDestroy()
         stopListeningForQueueChanges()
+        handler.removeCallbacks(updateRunnable)
     }
 }
