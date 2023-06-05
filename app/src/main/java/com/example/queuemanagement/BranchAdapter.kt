@@ -46,7 +46,7 @@ class BranchAdapter(private val branchlist:ArrayList<Branch>, val user_uid:Strin
                 est_wait_time += x
             }
             holder.tvName.text = branchlist[position].name
-            holder.tvLocation.text = branchlist[position].location.toString()
+            holder.tvLocation.text = branchlist[position].distance?.toInt().toString() + " meters away"
             holder.tvQueueList.text ="Waiting Customers: $queue_size "     // TODO: FIX HERE
             holder.tvEstTime.text = "Estimated Time: $est_wait_time"
 

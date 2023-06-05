@@ -47,6 +47,29 @@ class FirestoreDB  {
             }
     }
 
+    // Method for adding data to Firestore. Can handle any type of data / object
+    fun addData(collection: String, data: Any) {
+        db.collection(collection)
+            .add(data)
+            .addOnSuccessListener { documentReference ->
+                Log.d("addData", "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("addData", "Error adding document", e)
+            }
+    }
+
+    fun updateDynamicPriority(queuePath: String, uid: String, currentPriority: Int ){
+
+        getDocumentByField(queuePath,"customer_id",uid){
+
+            it?.reference?.update("priority",currentPriority+1)
+            Log.d("updateDynamicPriority", "PRIORITY DYNAMICALLY INCREASED")
+
+        }
+
+    }
+
     // This function will take the collection, field and its value. Then finds the correct
     // document and return its Document Snapshot.
     fun getDocumentByField(collectionName: String, fieldName: String, fieldValue: String?, callback: (DocumentSnapshot?) -> Unit) {
@@ -236,17 +259,7 @@ class FirestoreDB  {
         addData("Tickets", myticket)
     }
 
-    // Method for adding data to Firestore. Can handle any type of data / object
-    fun addData(collection: String, data: Any) {
-        db.collection(collection)
-            .add(data)
-            .addOnSuccessListener { documentReference ->
-                Log.d("addData", "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("addData", "Error adding document", e)
-            }
-    }
+
 
     fun ticketFromFirestore(doc: DocumentSnapshot): Ticket {
         val ticket = Ticket()
