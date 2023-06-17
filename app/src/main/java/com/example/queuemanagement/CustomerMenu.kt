@@ -23,9 +23,6 @@ class CustomerMenu : AppCompatActivity() {
             intent.putExtra("uid", user_uid)
             startActivity(intent)
         }
-        binding.button3.setOnClickListener {
-            Toast.makeText(this@CustomerMenu, "MAP", Toast.LENGTH_SHORT).show()
-        }
         binding.button2.setOnClickListener {
             intent = Intent(this, SettingPage::class.java)
             intent.putExtra("uid",user_uid)

@@ -17,6 +17,8 @@ class SettingPage : AppCompatActivity() {
     // Object for checking network connectivity
     private lateinit var cld : ConnectionLive
 
+    private var database = FirestoreDB()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingPageBinding.inflate(layoutInflater)
@@ -24,6 +26,14 @@ class SettingPage : AppCompatActivity() {
         // Check network connectivity and show/hide views accordingly
 
         checkNetworkConnection()
+
+        var user_uid = intent.getStringExtra("uid")
+        database.getDocumentByField("Customers","uid",user_uid){
+            binding.userinfo.text = it?.get("email")?.toString()
+        }
+
+
+
 
         binding.logOutClick.setOnClickListener{
 

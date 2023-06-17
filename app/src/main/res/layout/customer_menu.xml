@@ -25,14 +25,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="188dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:text="VIEW MAP" />
-
-    <Button
         android:id="@+id/button1"
         android:layout_width="188dp"
         android:layout_height="100dp"
