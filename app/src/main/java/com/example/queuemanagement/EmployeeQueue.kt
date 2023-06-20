@@ -58,6 +58,9 @@ class EmployeeQueue : AppCompatActivity() {
             val branchMap = data?.get("branch") as Map<*, *>
             val eQueue = branchMap["Queue"] as String
 
+            // Showing the branch name on screen
+            binding.textView12.text = branchMap["name"].toString()
+
             database.listenToChanges(eQueue){ querySnapshot ->
 
                 var queueList = mutableListOf<Ticket>()

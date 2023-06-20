@@ -44,12 +44,16 @@ class CustomerActiveQueue : AppCompatActivity() {
         // Getting User uid and selected queue directory
         val uid = intent.getStringExtra("uid").toString()
         val selectedQueue = intent.getStringExtra("queue").toString()
+        val branch_name = intent.getStringExtra("branch_name").toString()
         val priority = intent.getIntExtra("priority", 1)
+
+        binding.textViewBranchName.text = branch_name
+
 
         // Start listening for queue changes
         startListeningForQueueChanges(selectedQueue, uid, priority)
 
-        binding.LeaveQueueButton.setOnClickListener {
+        binding.button5.setOnClickListener {
             leaveButtonPressed = true
             stopListeningForQueueChanges()
             database.leaveQueue(selectedQueue, uid)
@@ -83,13 +87,13 @@ class CustomerActiveQueue : AppCompatActivity() {
             listenerRegistration
         ) { tickets, waitTimes, ticketInQueue ->
 
-            binding.queueNum.text = tickets[0].toString()
+            binding.textViewPosition.text = tickets[0].toString()
 
             var totalTime = 0
             for (x in waitTimes) {
                 totalTime += x
             }
-            binding.estRemaining.text = totalTime.toString()
+            binding.textViewWaitTime.text = "$totalTime min"
 
 
             // Sending notification if position is 2 (before the top of the queue)

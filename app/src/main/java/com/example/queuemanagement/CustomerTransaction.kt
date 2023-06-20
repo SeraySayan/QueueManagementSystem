@@ -109,6 +109,7 @@ class CustomerTransaction : AppCompatActivity() {
                 intent = Intent(this, CustomerActiveQueue::class.java)
                 intent.putExtra("queue",selected_queue)
                 intent.putExtra("uid", user_uid)
+                intent.putExtra("branch_name",branch_name)
                 intent.putExtra("priority",priority)//sending to the active queue
                 startActivity(intent)
 
